@@ -46,7 +46,7 @@ namespace NumerazioneProtocollo
 
             Refresh_docs();
 
-            dataGridView_doc.RowsAdded += new DataGridViewRowsAddedEventHandler(DocsModified);
+            //dataGridView_doc.RowsAdded += new DataGridViewRowsAddedEventHandler(DocsModified);
             dataGridView_doc.CellEndEdit += new DataGridViewCellEventHandler(CellEditEnded);
             
 

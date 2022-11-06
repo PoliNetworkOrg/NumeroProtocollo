@@ -217,7 +217,8 @@ namespace NumerazioneProtocollo.Model.Docs
 
         internal static Document Get(DataGridViewRow rowAdded, DataGridView dataGridView_doc)
         {
-            Document? doc = Model.Docs.Docs.Get(rowAdded, dataGridView_doc);
+            Document? doc = null;
+            doc = Model.Docs.Docs.Get(rowAdded, dataGridView_doc);
             if (doc != null)
                 return doc;
 
