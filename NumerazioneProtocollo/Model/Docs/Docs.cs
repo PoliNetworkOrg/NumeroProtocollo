@@ -12,7 +12,32 @@ namespace NumerazioneProtocollo.Model.Docs
 
     internal class Docs
     {
-        public List<Document>? documents = new List<Document>();
+        public List<Document>? documents = new();
+
+        internal static Document? Get(DataGridViewRow rowAdded, DataGridView dataGridView_doc)
+        {
+            Data.GlobalVariables.docs = new Rif<Docs>();
+            Data.GlobalVariables.docs.obj ??= new Docs();
+            Data.GlobalVariables.docs.obj.documents ??= new List<Document>();
+
+            int? id = Model.Docs.Document.GetId(rowAdded, dataGridView_doc);
+            int? category = Model.Docs.Document.GetDocument(rowAdded, dataGridView_doc);
+            if (id == null || category == null)
+                return null;
+
+            for (int i=0; i< Data.GlobalVariables.docs.obj.documents.Count; i++)
+            {
+                var x = Data.GlobalVariables.docs.obj.documents[i];
+                if (x == null) 
+                    continue;
+
+                if (x.id == id && x.category == category)
+                    return x;
+
+            }
+
+            return null;
+        }
 
         internal void HandleEdit(Document doc)
         {
@@ -25,7 +50,8 @@ namespace NumerazioneProtocollo.Model.Docs
             }
             else
             {
-                this.documents.Add(doc);
+                if (!string.IsNullOrEmpty(doc.fileName))
+                    this.documents.Add(doc);
             }
         }
 
@@ -36,7 +62,7 @@ namespace NumerazioneProtocollo.Model.Docs
             for (int i = 0; i < documents.Count; i++)
             {
                 var document = documents[i];
-                if (doc.id == document.id)
+                if (doc.id == document.id && doc.category == document.category)
                 {
                     return new Tuple<bool, int>(true, i);
                 }

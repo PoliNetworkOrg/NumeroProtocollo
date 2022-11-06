@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Data;
 using System.Linq;
 using System.Reflection.Metadata;
+using System.Security.Cryptography;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -22,9 +23,43 @@ namespace NumerazioneProtocollo.Model.Docs
         public int? id;
         public int? year;
 
- 
 
-      
+
+
+        internal static int? GetId(DataGridViewRow rowAdded, DataGridView dataGridView_doc)
+        {
+            object? id = GetValue(rowAdded, Data.Constants.DocId, dataGridView_doc);
+            if (id == null)
+                return null;
+            if (id is int idInt)
+                return idInt;
+
+            try
+            {
+                return Convert.ToInt32(id);
+            }
+            catch 
+            {
+                
+            }
+
+            return null;
+        }
+
+        private static object? GetValue(DataGridViewRow rowAdded, string docId, DataGridView dataGridView_doc)
+        {
+            var id = Model.VarNames.VarNames.findHeadStringWithHeader(dataGridView_doc, docId);
+            if (id == null) return null;
+
+            var x = rowAdded.Cells[id.Value];
+   
+            return x;
+        }
+
+        internal static int? GetDocument(DataGridViewRow rowAdded, DataGridView dataGridView_doc)
+        {
+            throw new NotImplementedException();
+        }
 
         public static object? HandleId(object? idParam, Document document)
         {
@@ -176,6 +211,11 @@ namespace NumerazioneProtocollo.Model.Docs
 
         internal static Document Get(DataGridViewRow rowAdded, DataGridView dataGridView_doc)
         {
+            Document? doc = Model.Docs.Docs.Get(rowAdded, dataGridView_doc);
+            if (doc != null)
+                return doc;
+
+
             Document document = new();
             foreach (var head in headList)
             {
@@ -186,6 +226,5 @@ namespace NumerazioneProtocollo.Model.Docs
             return document;
         }
 
-   
     }
 }

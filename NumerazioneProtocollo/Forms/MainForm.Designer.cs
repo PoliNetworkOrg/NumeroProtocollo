@@ -44,6 +44,7 @@
             this.button_doc_modifica = new System.Windows.Forms.Button();
             this.button_doc_crea = new System.Windows.Forms.Button();
             this.dataGridView_doc = new System.Windows.Forms.DataGridView();
+            this.button_doc_ricarica = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDown_search_anno)).BeginInit();
             this.groupBox1.SuspendLayout();
             this.groupBox2.SuspendLayout();
@@ -164,6 +165,7 @@
             // 
             // groupBox3
             // 
+            this.groupBox3.Controls.Add(this.button_doc_ricarica);
             this.groupBox3.Controls.Add(this.button_doc_elimina);
             this.groupBox3.Controls.Add(this.button_doc_modifica);
             this.groupBox3.Controls.Add(this.button_doc_crea);
@@ -186,7 +188,7 @@
             // 
             // button_doc_modifica
             // 
-            this.button_doc_modifica.Location = new System.Drawing.Point(181, 394);
+            this.button_doc_modifica.Location = new System.Drawing.Point(179, 394);
             this.button_doc_modifica.Name = "button_doc_modifica";
             this.button_doc_modifica.Size = new System.Drawing.Size(75, 23);
             this.button_doc_modifica.TabIndex = 2;
@@ -210,6 +212,16 @@
             this.dataGridView_doc.RowTemplate.Height = 25;
             this.dataGridView_doc.Size = new System.Drawing.Size(759, 366);
             this.dataGridView_doc.TabIndex = 0;
+            // 
+            // button_doc_ricarica
+            // 
+            this.button_doc_ricarica.Location = new System.Drawing.Point(531, 394);
+            this.button_doc_ricarica.Name = "button_doc_ricarica";
+            this.button_doc_ricarica.Size = new System.Drawing.Size(75, 23);
+            this.button_doc_ricarica.TabIndex = 4;
+            this.button_doc_ricarica.Text = "Ricarica";
+            this.button_doc_ricarica.UseVisualStyleBackColor = true;
+            this.button_doc_ricarica.Click += new System.EventHandler(this.Button_doc_ricarica_Click);
             // 
             // MainForm
             // 
@@ -251,5 +263,6 @@
         private Button button_doc_crea;
         private DataGridView dataGridView_doc;
         private CheckBox checkBox_search_year;
+        private Button button_doc_ricarica;
     }
 }

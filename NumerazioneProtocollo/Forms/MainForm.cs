@@ -13,7 +13,8 @@ namespace NumerazioneProtocollo
         }
 
         readonly DataTable dataTable = new();
-        private int? categoryIdSelected = null;
+        private int categoryIdSelected = 0;
+        private bool toRefreshDocs = true;
 
         private void Form1_Load(object sender, EventArgs e)
         {
@@ -55,7 +56,7 @@ namespace NumerazioneProtocollo
         {
             var row = e.RowIndex;
             RowEdit(row);
-
+            Refresh_docs();
         }
 
         private void DocsModified(object? sender, DataGridViewRowsAddedEventArgs e)
@@ -74,16 +75,61 @@ namespace NumerazioneProtocollo
 
 
             Document doc = Model.Docs.Document.Get(rowAdded, dataGridView_doc);
-            Data.GlobalVariables.docs.obj.HandleEdit(doc);
+           
 
             if (doc.creationDate == null)
             {
                 doc.creationDate = DateTime.Now;
-                Refresh_docs();
+
             }
+
+            if (doc.year == null)
+            {
+                doc.year = (int)numericUpDown_search_anno.Value;
+
+            }
+
+            if (doc.category == null)
+            {
+                doc.category = 0;
+  
+            }
+
+            if (doc.id == null)
+            {
+                int id = GetNewId();
+                doc.id = id;
+  
+            }
+
+            Data.GlobalVariables.docs.obj.HandleEdit(doc);
 
             Utils.Files.SaveFile(Data.GlobalVariables.docs, Data.Constants.PathDocs);
                     
+        }
+
+        private int GetNewId()
+        {
+
+            Data.GlobalVariables.docs ??= new Rif<Docs>();
+            Data.GlobalVariables.docs.obj ??= new Docs();
+            Data.GlobalVariables.docs.obj.documents ??= new List<Document>();
+
+            var x = Data.GlobalVariables.docs.obj.documents
+                .Where(x => (x.year == numericUpDown_search_anno.Value || checkBox_search_year.Checked == false ))
+                .Where(x => (( x.category == this.categoryIdSelected) && x.category != null))
+                .Select(x => x.id)
+                .Where(x => x != null)
+                .ToList();
+
+            if (x.Count == 0)
+                return 1;
+
+            var max = x.Max();
+            if (max == null) 
+                return 1;
+
+            return max.Value + 1;
         }
 
         private void LoadCategories()
@@ -107,14 +153,21 @@ namespace NumerazioneProtocollo
 
             Refresh_categories();
 
+            Utils.Files.SaveFile(Data.GlobalVariables.categories, Data.Constants.PathCategories);
+
             this.listBox_cat.SelectedIndexChanged += new EventHandler(Changed_category);
+
+            
         }
 
         private void Changed_category(object? sender, EventArgs e)
         {
             var cat = (Model.Cat.Category)this.listBox_cat.Items[this.listBox_cat.SelectedIndex];
-            this.categoryIdSelected = cat.Id;
-            Refresh_docs();
+            if (cat.Id != null)
+            {
+                this.categoryIdSelected = cat.Id.Value;
+                Refresh_docs();
+            }
         }
 
         private void Refresh_categories()
@@ -150,10 +203,15 @@ namespace NumerazioneProtocollo
             Refresh_docs();
         }
 
-        private void Refresh_docs( )
+
+        private void Refresh_docs()
         {
             string text = textBox_search.Text.ToLower();
+
+            toRefreshDocs = false;
             dataTable.Rows.Clear();
+            toRefreshDocs = true;
+
             if (Data.GlobalVariables.docs != null)
                 if (Data.GlobalVariables.docs.obj != null)
                     if (Data.GlobalVariables.docs.obj.documents != null)
@@ -165,7 +223,7 @@ namespace NumerazioneProtocollo
                                 var contained = row.fileName?.ToLower().Contains(text);
                                 if (string.IsNullOrEmpty(text) || (contained != null && contained.Value))
                                 {
-                                    if ((this.categoryIdSelected == null) || row.category == this.categoryIdSelected)
+                                    if (row.category == categoryIdSelected)
                                     {
                                         if (this.checkBox_search_year.Checked == false || this.numericUpDown_search_anno.Value == row.year || row.year == null)
                                         {
@@ -192,6 +250,11 @@ namespace NumerazioneProtocollo
         }
 
         private void CheckBox_search_year_CheckedChanged(object sender, EventArgs e)
+        {
+            Refresh_docs();
+        }
+
+        private void Button_doc_ricarica_Click(object sender, EventArgs e)
         {
             Refresh_docs();
         }

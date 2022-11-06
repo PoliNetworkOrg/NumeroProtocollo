@@ -14,5 +14,6 @@ namespace NumerazioneProtocollo.Data
     {
         public const string PathDocs = "prot_docs.json";
         public const string PathCategories = "prot_categories.json";
+        public const string DocId = "Id";
     }
 }

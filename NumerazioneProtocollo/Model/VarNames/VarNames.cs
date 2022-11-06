@@ -21,11 +21,13 @@ namespace NumerazioneProtocollo.Model.VarNames
             this.handleId1 = handleId1;
         }
 
+
+
         internal static IEnumerable<Model.VarNames.VarNames> GenerateListDocumentsHead()
         {
             List<VarNames> varNames = new()
             {
-                new VarNames("Id", Model.Docs.Document.HandleId),
+                new VarNames(Data.Constants.DocId, Model.Docs.Document.HandleId),
                 new VarNames("Category ID", Model.Docs.Document.HandleCategoryId),
                 new VarNames("Category Name", Model.Docs.Document.HandleCategoryName),
                 new VarNames("File name", Model.Docs.Document.HandleFileName),
@@ -51,19 +53,24 @@ namespace NumerazioneProtocollo.Model.VarNames
 
         internal void UpdateDocumentFromHeadAndDataRow(DataGridViewRow rowAdded, Document document, DataGridView dataGridView_doc)
         {
-            var findString = findHeadString(rowAdded, dataGridView_doc);
+            var findString = findHeadString(dataGridView_doc);
             if (findString != null)
             {
                 this.handleId1(rowAdded.Cells[findString.Value].Value, document);
             }
         }
 
-        private int? findHeadString(DataGridViewRow rowAdded, DataGridView dataGridView_doc)
+        private int? findHeadString(DataGridView dataGridView_doc)
         {
-            for (int i=0; i< dataGridView_doc.Columns.Count; i++)
+            return findHeadStringWithHeader(dataGridView_doc, this.v);
+        }
+
+        public static int? findHeadStringWithHeader(DataGridView dataGridView_doc, string v)
+        {
+            for (int i = 0; i < dataGridView_doc.Columns.Count; i++)
             {
                 var column = dataGridView_doc.Columns[i];
-                if (column.Name == this.v)
+                if (column.Name == v)
                     return i;
             }
             return null;
