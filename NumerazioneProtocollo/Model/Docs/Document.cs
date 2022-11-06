@@ -24,11 +24,30 @@ namespace NumerazioneProtocollo.Model.Docs
         public int? year;
 
 
+        private static object? GetValue(DataGridViewRow rowAdded, string docId, DataGridView dataGridView_doc)
+        {
+            var id = Model.VarNames.VarNames.findHeadStringWithHeader(dataGridView_doc, docId);
+            if (id == null) return null;
 
+            var x = rowAdded.Cells[id.Value];
+
+            return x;
+        }
 
         internal static int? GetId(DataGridViewRow rowAdded, DataGridView dataGridView_doc)
         {
-            object? id = GetValue(rowAdded, Data.Constants.DocId, dataGridView_doc);
+            return GetValueFromHeader(rowAdded, dataGridView_doc, Data.Constants.DocId);
+        }
+
+        internal static int? GetCategory(DataGridViewRow rowAdded, DataGridView dataGridView_doc)
+        {
+            return GetValueFromHeader(rowAdded, dataGridView_doc, Data.Constants.CategoryId);
+        }
+
+
+        private static int? GetValueFromHeader(DataGridViewRow rowAdded, DataGridView dataGridView_doc, string docId)
+        {
+            object? id = GetValue(rowAdded, docId, dataGridView_doc);
             if (id == null)
                 return null;
             if (id is int idInt)
@@ -38,29 +57,16 @@ namespace NumerazioneProtocollo.Model.Docs
             {
                 return Convert.ToInt32(id);
             }
-            catch 
+            catch
             {
-                
+
             }
 
             return null;
         }
 
-        private static object? GetValue(DataGridViewRow rowAdded, string docId, DataGridView dataGridView_doc)
-        {
-            var id = Model.VarNames.VarNames.findHeadStringWithHeader(dataGridView_doc, docId);
-            if (id == null) return null;
-
-            var x = rowAdded.Cells[id.Value];
-   
-            return x;
-        }
-
-        internal static int? GetDocument(DataGridViewRow rowAdded, DataGridView dataGridView_doc)
-        {
-            throw new NotImplementedException();
-        }
-
+      
+        
         public static object? HandleId(object? idParam, Document document)
         {
             if (idParam == null)
@@ -226,5 +232,6 @@ namespace NumerazioneProtocollo.Model.Docs
             return document;
         }
 
+      
     }
 }

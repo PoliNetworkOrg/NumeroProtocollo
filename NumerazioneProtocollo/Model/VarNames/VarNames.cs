@@ -28,7 +28,7 @@ namespace NumerazioneProtocollo.Model.VarNames
             List<VarNames> varNames = new()
             {
                 new VarNames(Data.Constants.DocId, Model.Docs.Document.HandleId),
-                new VarNames("Category ID", Model.Docs.Document.HandleCategoryId),
+                new VarNames(Data.Constants.CategoryId, Model.Docs.Document.HandleCategoryId),
                 new VarNames("Category Name", Model.Docs.Document.HandleCategoryName),
                 new VarNames("File name", Model.Docs.Document.HandleFileName),
                 new VarNames("Creation date", Model.Docs.Document.HandleCreationDate),

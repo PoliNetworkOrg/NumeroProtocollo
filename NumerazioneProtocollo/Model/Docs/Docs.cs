@@ -21,7 +21,7 @@ namespace NumerazioneProtocollo.Model.Docs
             Data.GlobalVariables.docs.obj.documents ??= new List<Document>();
 
             int? id = Model.Docs.Document.GetId(rowAdded, dataGridView_doc);
-            int? category = Model.Docs.Document.GetDocument(rowAdded, dataGridView_doc);
+            int? category = Model.Docs.Document.GetCategory(rowAdded, dataGridView_doc);
             if (id == null || category == null)
                 return null;
 
