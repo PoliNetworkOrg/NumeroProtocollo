@@ -32,5 +32,55 @@ namespace NumerazioneProtocollo.Model.Cat
             return null;
         }
 
+        internal void Add(string name)
+        {
+            this.categories ??= new List<Category>();
+            bool isPresent = GetIfPresent(name);
+            if (!isPresent)
+            {
+                Category cat = new()
+                {
+                    creationDate = DateTime.Now,
+                    Name= name,
+                    Id = GetNewIdCat(), 
+                    Description = null
+                };
+                this.categories.Add(cat);
+            }
+        }
+
+        private int? GetNewIdCat()
+        {
+            this.categories ??= new List<Category>();
+            var x = this.categories.Select(x => x.Id).Where(x => x != null).ToList();
+            if (x.Count > 0)
+            {
+                var max = x.Max();
+                if (max != null)
+                {
+                    return max.Value + 1;
+                }
+            }
+
+            return 1;
+        }
+
+        private bool GetIfPresent(string name)
+        {
+            var nameLower = name.ToLower();
+            this.categories ??= new List<Category>();
+            for (int i=0; i<this.categories.Count; i++)
+            {
+                var cat = this.categories[i];
+                if (cat != null)
+                {
+                    if (cat.Name != null)
+                        if (cat.Name.ToLower() == nameLower)
+                        return true;
+                }
+            }
+
+            return false;
+        }
     }
 }

@@ -13,13 +13,13 @@ namespace NumerazioneProtocollo.Utils
     {
         internal static void LoadFile<T>(Rif<T>? rif, string path)
         {
-            if (!File.Exists(Data.Constants.PathDocs))
+            if (!File.Exists(path))
             {
                 var obj = new JObject();
-                File.WriteAllText(Data.Constants.PathDocs, Newtonsoft.Json.JsonConvert.SerializeObject(obj));
+                File.WriteAllText(path, Newtonsoft.Json.JsonConvert.SerializeObject(obj));
             }
 
-            var jsonRead = File.ReadAllText(Data.Constants.PathDocs);
+            var jsonRead = File.ReadAllText(path);
             var objRead = Newtonsoft.Json.JsonConvert.DeserializeObject<T>(jsonRead);
             if (rif != null)
             {

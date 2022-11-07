@@ -108,6 +108,7 @@
             this.button_cat_elimina.TabIndex = 5;
             this.button_cat_elimina.Text = "Elimina";
             this.button_cat_elimina.UseVisualStyleBackColor = true;
+            this.button_cat_elimina.Click += new System.EventHandler(this.button_cat_elimina_Click);
             // 
             // button_cat_modifica
             // 
@@ -117,6 +118,7 @@
             this.button_cat_modifica.TabIndex = 4;
             this.button_cat_modifica.Text = "Modifica";
             this.button_cat_modifica.UseVisualStyleBackColor = true;
+            this.button_cat_modifica.Click += new System.EventHandler(this.button_cat_modifica_Click);
             // 
             // button_cat_crea
             // 
@@ -126,6 +128,7 @@
             this.button_cat_crea.TabIndex = 3;
             this.button_cat_crea.Text = "Crea";
             this.button_cat_crea.UseVisualStyleBackColor = true;
+            this.button_cat_crea.Click += new System.EventHandler(this.Button_cat_crea_Click);
             // 
             // groupBox2
             // 

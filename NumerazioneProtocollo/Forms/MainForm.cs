@@ -71,7 +71,7 @@ namespace NumerazioneProtocollo
             Data.GlobalVariables.docs.obj.documents ??= new List<Document>();
 
 
-            Document doc = getDoc(rowIndex);
+            Document doc = GetDoc(rowIndex);
            
 
             doc.creationDate ??= DateTime.Now;
@@ -85,7 +85,7 @@ namespace NumerazioneProtocollo
                     
         }
 
-        private Document getDoc(int rowIndex)
+        private Document GetDoc(int rowIndex)
         {
             DataGridViewRow rowAdded = dataGridView_doc.Rows[rowIndex];
 
@@ -244,32 +244,71 @@ namespace NumerazioneProtocollo
 
         private void Button_doc_elimina_Click(object sender, EventArgs e)
         {
-            int? rowId = getSelectedRow(dataGridView_doc);
+            DialogResult dialogResult = MessageBox.Show(
+                "Vuoi veramente cancellare il documento? E' un'operazione che non si dovrebbe fare con leggerezza.",
+                "Sei sicuro?", 
+                MessageBoxButtons.YesNo
+            );
+
+            if (dialogResult == DialogResult.Yes)
+            {
+                Delete_selected_doc();
+            }
+
+        }
+
+        private void Delete_selected_doc()
+        {
+            int? rowId = GetSelectedRow(dataGridView_doc);
             if (rowId == null)
                 return;
 
 
-            var doc = getDoc(rowId.Value);
+            var doc = GetDoc(rowId.Value);
             if (doc == null)
                 return;
 
-            if (doc.id == null) 
+            if (doc.id == null)
                 return;
 
             Data.GlobalVariables.docs ??= new Rif<Docs>();
             Data.GlobalVariables.docs.obj ??= new Docs();
             Data.GlobalVariables.docs.obj.Delete(doc.id.Value);
             Refresh_docs();
-
         }
 
-        private int? getSelectedRow(DataGridView dataGridView_doc)
+        private static int? GetSelectedRow(DataGridView dataGridView_doc)
         {
             return dataGridView_doc.SelectedCells.Count > 0
                 ? dataGridView_doc.SelectedCells[0].RowIndex
                 : dataGridView_doc.SelectedRows.Count > 0 
                     ? dataGridView_doc.SelectedRows[0].Index 
                     : null;
+        }
+
+        private void Button_cat_crea_Click(object sender, EventArgs e)
+        {
+            if (!string.IsNullOrEmpty(textBox_cat.Text))
+            {
+                var name = textBox_cat.Text;
+
+                Data.GlobalVariables.categories ??= new Rif<Model.Cat.Categories>();
+                Data.GlobalVariables.categories.obj ??= new Model.Cat.Categories();
+                Data.GlobalVariables.categories.obj.Add(name);
+
+                Refresh_categories();
+                Utils.Files.SaveFile(Data.GlobalVariables.categories, Data.Constants.PathCategories);
+            }
+        }
+
+        private void button_cat_modifica_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void button_cat_elimina_Click(object sender, EventArgs e)
+        {
+
         }
     }
 }
