@@ -37,14 +37,15 @@
             this.button_cat_modifica = new System.Windows.Forms.Button();
             this.button_cat_crea = new System.Windows.Forms.Button();
             this.groupBox2 = new System.Windows.Forms.GroupBox();
+            this.label3 = new System.Windows.Forms.Label();
+            this.textBox_search_id_doc = new System.Windows.Forms.TextBox();
+            this.label2 = new System.Windows.Forms.Label();
             this.label1 = new System.Windows.Forms.Label();
             this.groupBox3 = new System.Windows.Forms.GroupBox();
             this.button_doc_ricarica = new System.Windows.Forms.Button();
             this.button_doc_elimina = new System.Windows.Forms.Button();
             this.dataGridView_doc = new System.Windows.Forms.DataGridView();
-            this.label2 = new System.Windows.Forms.Label();
-            this.label3 = new System.Windows.Forms.Label();
-            this.textBox_search_id_doc = new System.Windows.Forms.TextBox();
+            this.button1 = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDown_search_anno)).BeginInit();
             this.groupBox1.SuspendLayout();
             this.groupBox2.SuspendLayout();
@@ -148,6 +149,32 @@
             this.groupBox2.TabStop = false;
             this.groupBox2.Text = "Ricerca";
             // 
+            // label3
+            // 
+            this.label3.AutoSize = true;
+            this.label3.Location = new System.Drawing.Point(10, 55);
+            this.label3.Name = "label3";
+            this.label3.Size = new System.Drawing.Size(82, 15);
+            this.label3.TabIndex = 5;
+            this.label3.Text = "Id documento";
+            // 
+            // textBox_search_id_doc
+            // 
+            this.textBox_search_id_doc.Location = new System.Drawing.Point(98, 51);
+            this.textBox_search_id_doc.Name = "textBox_search_id_doc";
+            this.textBox_search_id_doc.Size = new System.Drawing.Size(220, 23);
+            this.textBox_search_id_doc.TabIndex = 4;
+            this.textBox_search_id_doc.TextChanged += new System.EventHandler(this.TextBox_search_id_doc_TextChanged);
+            // 
+            // label2
+            // 
+            this.label2.AutoSize = true;
+            this.label2.Location = new System.Drawing.Point(34, 25);
+            this.label2.Name = "label2";
+            this.label2.Size = new System.Drawing.Size(58, 15);
+            this.label2.TabIndex = 3;
+            this.label2.Text = "File name";
+            // 
             // label1
             // 
             this.label1.AutoSize = true;
@@ -159,6 +186,7 @@
             // 
             // groupBox3
             // 
+            this.groupBox3.Controls.Add(this.button1);
             this.groupBox3.Controls.Add(this.button_doc_ricarica);
             this.groupBox3.Controls.Add(this.button_doc_elimina);
             this.groupBox3.Controls.Add(this.dataGridView_doc);
@@ -171,7 +199,7 @@
             // 
             // button_doc_ricarica
             // 
-            this.button_doc_ricarica.Location = new System.Drawing.Point(531, 394);
+            this.button_doc_ricarica.Location = new System.Drawing.Point(163, 394);
             this.button_doc_ricarica.Name = "button_doc_ricarica";
             this.button_doc_ricarica.Size = new System.Drawing.Size(75, 23);
             this.button_doc_ricarica.TabIndex = 4;
@@ -198,31 +226,14 @@
             this.dataGridView_doc.Size = new System.Drawing.Size(759, 366);
             this.dataGridView_doc.TabIndex = 0;
             // 
-            // label2
+            // button1
             // 
-            this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(34, 25);
-            this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(58, 15);
-            this.label2.TabIndex = 3;
-            this.label2.Text = "File name";
-            // 
-            // label3
-            // 
-            this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(10, 55);
-            this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(82, 15);
-            this.label3.TabIndex = 5;
-            this.label3.Text = "Id documento";
-            // 
-            // textBox_search_id_doc
-            // 
-            this.textBox_search_id_doc.Location = new System.Drawing.Point(98, 51);
-            this.textBox_search_id_doc.Name = "textBox_search_id_doc";
-            this.textBox_search_id_doc.Size = new System.Drawing.Size(220, 23);
-            this.textBox_search_id_doc.TabIndex = 4;
-            this.textBox_search_id_doc.TextChanged += new System.EventHandler(this.TextBox_search_id_doc_TextChanged);
+            this.button1.Location = new System.Drawing.Point(666, 394);
+            this.button1.Name = "button1";
+            this.button1.Size = new System.Drawing.Size(99, 23);
+            this.button1.TabIndex = 5;
+            this.button1.Text = "Impostazioni";
+            this.button1.UseVisualStyleBackColor = true;
             // 
             // MainForm
             // 
@@ -265,5 +276,6 @@
         private Label label3;
         private TextBox textBox_search_id_doc;
         private Label label2;
+        private Button button1;
     }
 }

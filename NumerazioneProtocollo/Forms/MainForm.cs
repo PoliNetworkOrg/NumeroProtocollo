@@ -76,7 +76,7 @@ public partial class MainForm : Form
 
         GlobalVariables.docs.Obj.HandleEdit(doc);
 
-        Files.SaveFile(GlobalVariables.docs, Constants.PathDocs);
+        Files.SaveFile(GlobalVariables.docs, Data.Constants.GetPathDocuments());
     }
 
     private Document GetDoc(int rowIndex)
@@ -131,7 +131,7 @@ public partial class MainForm : Form
 
         Refresh_categories();
 
-        Files.SaveFile(GlobalVariables.categories, Constants.PathCategories);
+        Files.SaveFile(GlobalVariables.categories, Data.Constants.GetPathCategories());
 
         listBox_cat.SelectedIndexChanged += Changed_category;
     }
@@ -173,8 +173,11 @@ public partial class MainForm : Form
 
     private static void LoadFiles()
     {
-        Files.LoadFile(GlobalVariables.docs, Constants.PathDocs);
-        Files.LoadFile(GlobalVariables.categories, Constants.PathCategories);
+        Files.LoadFile(GlobalVariables.paths, Constants.PathOfPaths);
+
+        Files.LoadFile(GlobalVariables.docs, Data.Constants.GetPathDocuments());
+        Files.LoadFile(GlobalVariables.categories, Data.Constants.GetPathCategories());
+       
     }
 
     private void TextBox_search_TextChanged(object sender, EventArgs e)
@@ -296,7 +299,7 @@ public partial class MainForm : Form
         GlobalVariables.categories.Obj.Add(name);
 
         Refresh_categories();
-        Files.SaveFile(GlobalVariables.categories, Constants.PathCategories);
+        Files.SaveFile(GlobalVariables.categories, Data.Constants.GetPathCategories());
     }
 
     private void Button_cat_modifica_Click(object sender, EventArgs e)
@@ -341,7 +344,7 @@ public partial class MainForm : Form
         GlobalVariables.categories ??= new Rif<Categories>();
         GlobalVariables.categories.Obj ??= new Categories();
         GlobalVariables.categories.Obj.EditName(idCategorySelected.Value, text);
-        Files.SaveFile(GlobalVariables.categories, Constants.PathCategories);
+        Files.SaveFile(GlobalVariables.categories, Data.Constants.GetPathCategories());
         Refresh_categories();
     }
 
@@ -353,7 +356,7 @@ public partial class MainForm : Form
         GlobalVariables.categories ??= new Rif<Categories>();
         GlobalVariables.categories.Obj ??= new Categories();
         GlobalVariables.categories.Obj.DeleteFromId(idCategorySelected.Value);
-        Files.SaveFile(GlobalVariables.categories, Constants.PathCategories);
+        Files.SaveFile(GlobalVariables.categories, Data.Constants.GetPathCategories());
         Refresh_categories();
     }
 
