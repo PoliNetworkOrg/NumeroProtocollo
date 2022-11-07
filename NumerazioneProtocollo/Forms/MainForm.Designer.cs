@@ -222,7 +222,7 @@
             this.textBox_search_id_doc.Name = "textBox_search_id_doc";
             this.textBox_search_id_doc.Size = new System.Drawing.Size(220, 23);
             this.textBox_search_id_doc.TabIndex = 4;
-            this.textBox_search_id_doc.TextChanged += new System.EventHandler(this.textBox_search_id_doc_TextChanged);
+            this.textBox_search_id_doc.TextChanged += new System.EventHandler(this.TextBox_search_id_doc_TextChanged);
             // 
             // MainForm
             // 

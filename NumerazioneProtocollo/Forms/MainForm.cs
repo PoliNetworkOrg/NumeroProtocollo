@@ -195,20 +195,40 @@ public partial class MainForm : Form
             for (var i = 0; i < GlobalVariables.docs.Obj.documents.Count; i++)
             {
                 var row = GlobalVariables.docs.Obj.documents[i];
-                if (row.id == null) continue;
+
+                if (row.id == null) 
+                    continue;
+
                 var contained = row.fileName?.ToLower().Contains(text);
-                if (!string.IsNullOrEmpty(text) && (contained == null || !contained.Value)) continue;
-                if (row.category != categoryIdSelected) continue;
+                if (!string.IsNullOrEmpty(text) && (contained == null || !contained.Value))
+                    continue;
+
+                if (row.category != categoryIdSelected)
+                    continue;
+
                 if (numericUpDown_search_anno.Value != row.year && row.year != null)
                     continue;
-                var row2 = dataTable.NewRow();
-                foreach (var docHead in HeadList.HeadListVar) row2[docHead.GetName()] = docHead.GetValue(row);
 
+                var idString = row.id.ToString();
+                if (!string.IsNullOrEmpty(textBox_search_id_doc.Text) && (idString == null || !idString.Contains(textBox_search_id_doc.Text)))
+                    continue;
 
-                dataTable.Rows.Add(row2);
+                //this row is valid, let's add it
+                AddRow(row);
             }
 
         dataGridView_doc.DataSource = dataTable;
+    }
+
+    private void AddRow(Document row)
+    {
+        var row2 = dataTable.NewRow();
+
+        foreach (var docHead in HeadList.HeadListVar) 
+            row2[docHead.GetName()] = docHead.GetValue(row);
+
+
+        dataTable.Rows.Add(row2);
     }
 
     private void NumericUpDown_search_anno_ValueChanged(object sender, EventArgs e)
@@ -337,7 +357,7 @@ public partial class MainForm : Form
         Refresh_categories();
     }
 
-    private void textBox_search_id_doc_TextChanged(object sender, EventArgs e)
+    private void TextBox_search_id_doc_TextChanged(object sender, EventArgs e)
     {
         Refresh_docs();
     }
