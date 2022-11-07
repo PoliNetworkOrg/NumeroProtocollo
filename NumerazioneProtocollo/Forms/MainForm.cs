@@ -38,7 +38,7 @@ public partial class MainForm : Form
 
     private void LoadDocuments()
     {
-        foreach (var docHead in Document.headList) dataTable.Columns.Add(docHead.GetName());
+        foreach (var docHead in Model.VarNames.HeadList.HeadListVar) dataTable.Columns.Add(docHead.GetName());
 
         Refresh_docs();
 
@@ -201,7 +201,7 @@ public partial class MainForm : Form
                 if (numericUpDown_search_anno.Value != row.year && row.year != null)
                     continue;
                 var row2 = dataTable.NewRow();
-                foreach (var docHead in Document.headList) row2[docHead.GetName()] = docHead.GetValue(row);
+                foreach (var docHead in Model.VarNames.HeadList.HeadListVar) row2[docHead.GetName()] = docHead.GetValue(row);
 
 
                 dataTable.Rows.Add(row2);

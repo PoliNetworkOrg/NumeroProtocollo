@@ -8,8 +8,7 @@ namespace NumerazioneProtocollo.Model.Docs;
 [JsonObject(MemberSerialization.Fields)]
 internal class Document
 {
-    internal static IEnumerable<VarNames.VarNames> headList = VarNames.VarNames.GenerateListDocumentsHead();
-    public int? category;
+     public int? category;
     public DateTime? creationDate;
     public string? fileName;
     public string? filePath;
@@ -231,7 +230,7 @@ internal class Document
 
 
         Document document = new();
-        foreach (var head in headList) head.UpdateDocumentFromHeadAndDataRow(rowAdded, document, dataGridView_doc);
+        foreach (var head in Model.VarNames.HeadList.HeadListVar) head.UpdateDocumentFromHeadAndDataRow(rowAdded, document, dataGridView_doc);
 
 
         return document;
