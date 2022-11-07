@@ -24,7 +24,7 @@ jobs:
       run: dotnet restore
       
     - name: Build
-      run: dotnet build NumerazioneProtocollo.sln /p:DeployOnBuild=true /p:Configuration=Release /p:Platform="x64" /p:PublishProfile=Properties/PublishProfiles/linux-x64.pubxml
+      run: dotnet build NumerazioneProtocollo.sln /p:Configuration=Debug /p:Platform="Any CPU"
 
     - name: Get current date
       continue-on-error: true
