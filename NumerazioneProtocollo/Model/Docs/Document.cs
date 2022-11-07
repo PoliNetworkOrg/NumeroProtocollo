@@ -45,48 +45,50 @@ namespace NumerazioneProtocollo.Model.Docs
         }
 
 
-        private static int? GetValueFromHeader(DataGridViewRow rowAdded, DataGridView dataGridView_doc, string docId)
+        private static int? GetValueFromHeader(DataGridViewRow rowAdded, DataGridView dataGridViewDoc, string docId)
         {
-            object? id = GetValue(rowAdded, docId, dataGridView_doc);
-            if (id == null)
-                return null;
-            if (id is int idInt)
-                return idInt;
-
-            try
+            var id = GetValue(rowAdded, docId, dataGridViewDoc);
+            switch (id)
             {
-                return Convert.ToInt32(id);
-            }
-            catch
-            {
+                case null:
+                    return null;
+                case int idInt:
+                    return idInt;
+                default:
+                    try
+                    {
+                        return Convert.ToInt32(id);
+                    }
+                    catch
+                    {
+                        // ignored
+                    }
 
+                    return null;
             }
-
-            return null;
         }
 
       
         
         public static object? HandleId(object? idParam, Document document)
         {
-            if (idParam == null)
-                return document.id;
-
-            if (idParam is int idParamInt)
+            switch (idParam)
             {
-                document.id = idParamInt;
-                return document.id;
+                case null:
+                    return document.id;
+                case int idParamInt:
+                    document.id = idParamInt;
+                    return document.id;
             }
 
-            int? value = TryGetValueInt(idParam);
-            if (value != null)
-            {
-                document.id = value.Value;
+            var value = TryGetValueInt(idParam);
+            if (value == null) 
                 return document.id;
-            }
-   
-
+            
+            document.id = value.Value;
             return document.id;
+
+
         }
 
 
@@ -128,23 +130,22 @@ namespace NumerazioneProtocollo.Model.Docs
 
         internal static object? HandleCategoryId(object? arg1, Document document)
         {
-            if (arg1 == null)
-                return document.category;
-
-            if (arg1 is int idParamInt)
+            switch (arg1)
             {
-                document.category = idParamInt;
-                return document.category;
+                case null:
+                    return document.category;
+                case int idParamInt:
+                    document.category = idParamInt;
+                    return document.category;
             }
 
-            int? value = TryGetValueInt(arg1);
-            if (value != null)
-            {
-                document.category = value.Value;
+            var value = TryGetValueInt(arg1);
+            if (value == null) 
                 return document.category;
-            }
-
+            
+            document.category = value.Value;
             return document.category;
+
         }
 
         internal static object? HandleCategoryName(object? arg1, Document document)
@@ -154,69 +155,70 @@ namespace NumerazioneProtocollo.Model.Docs
 
         internal static object? HandleFileName(object? arg1, Document document)
         {
-            if (arg1 == null)
-                return document.fileName;
-
-            if (arg1 is string idParamInt)
+            switch (arg1)
             {
-                document.fileName = idParamInt;
-                return document.fileName;
+                case null:
+                    return document.fileName;
+                case string idParamInt:
+                    document.fileName = idParamInt;
+                    return document.fileName;
             }
 
-            string? value = arg1.ToString();
-            if (value != null)
-            {
-                document.fileName = value;
+            var value = arg1.ToString();
+            if (value == null)
                 return document.fileName;
-            }
-
+            
+            document.fileName = value;
             return document.fileName;
+
         }
 
         internal static object? HandleCreationDate(object? arg1, Document document)
         {
-            if (arg1 == null)
-                return document.creationDate;
-
-            if (arg1 is DateTime idParamInt)
+            switch (arg1)
             {
-                document.creationDate = idParamInt;
-                return document.creationDate;
+                case null:
+                    return document.creationDate;
+                case DateTime idParamInt:
+                    document.creationDate = idParamInt;
+                    return document.creationDate;
             }
 
-            DateTime? value = TryGetValueDateTime(arg1);
-            if (value != null)
-            {
-                document.creationDate = value.Value;
+            var value = TryGetValueDateTime(arg1);
+            if (value == null)
                 return document.creationDate;
-            }
-
+            
+            document.creationDate = value.Value;
             return document.creationDate;
+
         }
 
         internal static object? HandleYear(object? arg1, Document document)
         {
-            if (arg1 == null)
-                return document.year;
-
-            if (arg1 is int idParamInt)
+            switch (arg1)
             {
-                document.year = idParamInt;
-                return document.year;
+                case null:
+                    return document.year;
+                case int idParamInt:
+                    document.year = idParamInt;
+                    return document.year;
             }
 
-            int? value = TryGetValueInt(arg1);
-            if (value != null)
-            {
-                document.year = value.Value;
+            var value = TryGetValueInt(arg1);
+            if (value == null) 
                 return document.year;
-            }
-
+            
+            document.year = value.Value;
             return document.year;
+
         }
 
         internal static Document Get(DataGridViewRow rowAdded, DataGridView dataGridView_doc)
         {
+            Data.GlobalVariables.docs ??= new Rif<Docs>();
+            Data.GlobalVariables.docs.obj ??= new Docs();
+            Data.GlobalVariables.docs.obj.documents ??= new List<Document>();
+
             Document? doc = null;
             doc = Model.Docs.Docs.Get(rowAdded, dataGridView_doc);
             if (doc != null)

@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace NumerazioneProtocollo.Utils
 {
-    internal class Files
+    internal static class Files
     {
         internal static void LoadFile<T>(Rif<T>? rif, string path)
         {

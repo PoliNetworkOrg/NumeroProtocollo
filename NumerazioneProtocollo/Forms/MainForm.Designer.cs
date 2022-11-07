@@ -37,14 +37,13 @@
             this.button_cat_modifica = new System.Windows.Forms.Button();
             this.button_cat_crea = new System.Windows.Forms.Button();
             this.groupBox2 = new System.Windows.Forms.GroupBox();
-            this.checkBox_search_year = new System.Windows.Forms.CheckBox();
             this.label1 = new System.Windows.Forms.Label();
             this.groupBox3 = new System.Windows.Forms.GroupBox();
+            this.button_doc_ricarica = new System.Windows.Forms.Button();
             this.button_doc_elimina = new System.Windows.Forms.Button();
             this.button_doc_modifica = new System.Windows.Forms.Button();
             this.button_doc_crea = new System.Windows.Forms.Button();
             this.dataGridView_doc = new System.Windows.Forms.DataGridView();
-            this.button_doc_ricarica = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDown_search_anno)).BeginInit();
             this.groupBox1.SuspendLayout();
             this.groupBox2.SuspendLayout();
@@ -132,7 +131,6 @@
             // 
             // groupBox2
             // 
-            this.groupBox2.Controls.Add(this.checkBox_search_year);
             this.groupBox2.Controls.Add(this.label1);
             this.groupBox2.Controls.Add(this.textBox_search);
             this.groupBox2.Controls.Add(this.numericUpDown_search_anno);
@@ -142,17 +140,6 @@
             this.groupBox2.TabIndex = 4;
             this.groupBox2.TabStop = false;
             this.groupBox2.Text = "Ricerca";
-            // 
-            // checkBox_search_year
-            // 
-            this.checkBox_search_year.AutoSize = true;
-            this.checkBox_search_year.Location = new System.Drawing.Point(200, 72);
-            this.checkBox_search_year.Name = "checkBox_search_year";
-            this.checkBox_search_year.Size = new System.Drawing.Size(103, 19);
-            this.checkBox_search_year.TabIndex = 3;
-            this.checkBox_search_year.Text = "Filtro per anno";
-            this.checkBox_search_year.UseVisualStyleBackColor = true;
-            this.checkBox_search_year.CheckedChanged += new System.EventHandler(this.CheckBox_search_year_CheckedChanged);
             // 
             // label1
             // 
@@ -176,6 +163,16 @@
             this.groupBox3.TabIndex = 5;
             this.groupBox3.TabStop = false;
             this.groupBox3.Text = "Documenti";
+            // 
+            // button_doc_ricarica
+            // 
+            this.button_doc_ricarica.Location = new System.Drawing.Point(531, 394);
+            this.button_doc_ricarica.Name = "button_doc_ricarica";
+            this.button_doc_ricarica.Size = new System.Drawing.Size(75, 23);
+            this.button_doc_ricarica.TabIndex = 4;
+            this.button_doc_ricarica.Text = "Ricarica";
+            this.button_doc_ricarica.UseVisualStyleBackColor = true;
+            this.button_doc_ricarica.Click += new System.EventHandler(this.Button_doc_ricarica_Click);
             // 
             // button_doc_elimina
             // 
@@ -212,16 +209,6 @@
             this.dataGridView_doc.RowTemplate.Height = 25;
             this.dataGridView_doc.Size = new System.Drawing.Size(759, 366);
             this.dataGridView_doc.TabIndex = 0;
-            // 
-            // button_doc_ricarica
-            // 
-            this.button_doc_ricarica.Location = new System.Drawing.Point(531, 394);
-            this.button_doc_ricarica.Name = "button_doc_ricarica";
-            this.button_doc_ricarica.Size = new System.Drawing.Size(75, 23);
-            this.button_doc_ricarica.TabIndex = 4;
-            this.button_doc_ricarica.Text = "Ricarica";
-            this.button_doc_ricarica.UseVisualStyleBackColor = true;
-            this.button_doc_ricarica.Click += new System.EventHandler(this.Button_doc_ricarica_Click);
             // 
             // MainForm
             // 
@@ -262,7 +249,6 @@
         private Button button_doc_modifica;
         private Button button_doc_crea;
         private DataGridView dataGridView_doc;
-        private CheckBox checkBox_search_year;
         private Button button_doc_ricarica;
     }
 }

@@ -12,13 +12,13 @@ namespace NumerazioneProtocollo.Model.VarNames
     {
         private string v;
 
-        private Func<object?, Document, object?> handleId1;
+        private readonly Func<object?, Document, object?> _handleId1;
 
 
-        public VarNames(string v, Func<object?, Document, object?> handleId1)
+        private VarNames(string v, Func<object?, Document, object?> handleId1)
         {
             this.v = v;
-            this.handleId1 = handleId1;
+            this._handleId1 = handleId1;
         }
 
 
@@ -47,7 +47,7 @@ namespace NumerazioneProtocollo.Model.VarNames
 
         internal object? GetValue(Document document)
         {
-            var x = this.handleId1(null, document);
+            var x = this._handleId1(null, document);
             return x;
         }
 
@@ -56,7 +56,7 @@ namespace NumerazioneProtocollo.Model.VarNames
             var findString = findHeadString(dataGridView_doc);
             if (findString != null)
             {
-                this.handleId1(rowAdded.Cells[findString.Value].Value, document);
+                this._handleId1(rowAdded.Cells[findString.Value].Value, document);
             }
         }
 
@@ -78,7 +78,7 @@ namespace NumerazioneProtocollo.Model.VarNames
 
         internal void UpdateDocumentFromHeadAndDataRow(DataRow rowAdded, Document document)
         {
-            this.handleId1(rowAdded[this.v], document);
+            this._handleId1(rowAdded[this.v], document);
         }
 
     }

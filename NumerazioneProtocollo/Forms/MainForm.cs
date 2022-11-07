@@ -14,7 +14,7 @@ namespace NumerazioneProtocollo
 
         readonly DataTable dataTable = new();
         private int categoryIdSelected = 0;
-        private bool toRefreshDocs = true;
+    
 
         private void Form1_Load(object sender, EventArgs e)
         {
@@ -77,30 +77,10 @@ namespace NumerazioneProtocollo
             Document doc = Model.Docs.Document.Get(rowAdded, dataGridView_doc);
            
 
-            if (doc.creationDate == null)
-            {
-                doc.creationDate = DateTime.Now;
-
-            }
-
-            if (doc.year == null)
-            {
-                doc.year = (int)numericUpDown_search_anno.Value;
-
-            }
-
-            if (doc.category == null)
-            {
-                doc.category = 0;
-  
-            }
-
-            if (doc.id == null)
-            {
-                int id = GetNewId();
-                doc.id = id;
-  
-            }
+            doc.creationDate ??= DateTime.Now;
+            doc.year ??= (int)numericUpDown_search_anno.Value;
+            doc.category ??= 0;
+            doc.id ??= GetNewId();
 
             Data.GlobalVariables.docs.obj.HandleEdit(doc);
 
@@ -116,7 +96,7 @@ namespace NumerazioneProtocollo
             Data.GlobalVariables.docs.obj.documents ??= new List<Document>();
 
             var x = Data.GlobalVariables.docs.obj.documents
-                .Where(x => (x.year == numericUpDown_search_anno.Value || checkBox_search_year.Checked == false ))
+                .Where(x => (x.year == numericUpDown_search_anno.Value || true == false ))
                 .Where(x => (( x.category == this.categoryIdSelected) && x.category != null))
                 .Select(x => x.id)
                 .Where(x => x != null)
@@ -208,38 +188,36 @@ namespace NumerazioneProtocollo
         {
             string text = textBox_search.Text.ToLower();
 
-            toRefreshDocs = false;
+           
             dataTable.Rows.Clear();
-            toRefreshDocs = true;
+      
 
-            if (Data.GlobalVariables.docs != null)
-                if (Data.GlobalVariables.docs.obj != null)
-                    if (Data.GlobalVariables.docs.obj.documents != null)
-                        for (int i = 0; i < Data.GlobalVariables.docs.obj.documents.Count; i++)
+            if (Data.GlobalVariables.docs is { obj.documents: { } })
+                for (int i = 0; i < Data.GlobalVariables.docs.obj.documents.Count; i++)
+                {
+                    Document? row = Data.GlobalVariables.docs.obj.documents[i];
+                    if (row.id != null)
+                    {
+                        var contained = row.fileName?.ToLower().Contains(text);
+                        if (string.IsNullOrEmpty(text) || (contained != null && contained.Value))
                         {
-                            Document? row = Data.GlobalVariables.docs.obj.documents[i];
-                            if (row.id != null)
+                            if (row.category == categoryIdSelected)
                             {
-                                var contained = row.fileName?.ToLower().Contains(text);
-                                if (string.IsNullOrEmpty(text) || (contained != null && contained.Value))
+                                if (true == false || this.numericUpDown_search_anno.Value == row.year || row.year == null)
                                 {
-                                    if (row.category == categoryIdSelected)
+                                    DataRow row2 = dataTable.NewRow();
+                                    foreach (var docHead in Document.headList)
                                     {
-                                        if (this.checkBox_search_year.Checked == false || this.numericUpDown_search_anno.Value == row.year || row.year == null)
-                                        {
-                                            DataRow row2 = dataTable.NewRow();
-                                            foreach (var docHead in Document.headList)
-                                            {
-                                                row2[docHead.GetName()] = docHead.GetValue(row);
-                                            }
-
-
-                                            dataTable.Rows.Add(row2);
-                                        }
+                                        row2[docHead.GetName()] = docHead.GetValue(row);
                                     }
+
+
+                                    dataTable.Rows.Add(row2);
                                 }
                             }
                         }
+                    }
+                }
 
             dataGridView_doc.DataSource = dataTable;
         }

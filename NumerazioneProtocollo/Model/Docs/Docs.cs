@@ -16,7 +16,7 @@ namespace NumerazioneProtocollo.Model.Docs
 
         internal static Document? Get(DataGridViewRow rowAdded, DataGridView dataGridView_doc)
         {
-            Data.GlobalVariables.docs = new Rif<Docs>();
+            Data.GlobalVariables.docs ??= new Rif<Docs>();
             Data.GlobalVariables.docs.obj ??= new Docs();
             Data.GlobalVariables.docs.obj.documents ??= new List<Document>();
 

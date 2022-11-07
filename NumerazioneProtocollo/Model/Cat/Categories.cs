@@ -17,17 +17,17 @@ namespace NumerazioneProtocollo.Model.Cat
 
         public static string? GetCategoryName(int? category)
         {
-            if (Data.GlobalVariables.categories != null &&
-              Data.GlobalVariables.categories.obj != null &&
-              Data.GlobalVariables.categories.obj.categories != null)
-                foreach (var cat in Data.GlobalVariables.categories.obj.categories)
+            if (Data.GlobalVariables.categories is not { obj.categories: { } }) 
+                return null;
+            
+            foreach (var cat in Data.GlobalVariables.categories.obj.categories)
+            {
+                if (cat != null)
                 {
-                    if (cat != null)
-                    {
-                        if (cat.Id == category)
-                            return cat.Name;
-                    }
+                    if (cat.Id == category)
+                        return cat.Name;
                 }
+            }
 
             return null;
         }
