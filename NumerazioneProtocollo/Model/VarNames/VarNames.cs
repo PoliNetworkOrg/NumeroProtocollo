@@ -10,7 +10,7 @@ namespace NumerazioneProtocollo.Model.VarNames
 {
     internal class VarNames
     {
-        private string v;
+        private readonly string v;
 
         private readonly Func<object?, Document, object?> _handleId1;
 
@@ -31,6 +31,7 @@ namespace NumerazioneProtocollo.Model.VarNames
                 new VarNames(Data.Constants.CategoryId, Model.Docs.Document.HandleCategoryId),
                 new VarNames("Category Name", Model.Docs.Document.HandleCategoryName),
                 new VarNames("File name", Model.Docs.Document.HandleFileName),
+                new VarNames("File path", Model.Docs.Document.HandleFilePath),
                 new VarNames("Creation date", Model.Docs.Document.HandleCreationDate),
                 new VarNames("Year", Model.Docs.Document.HandleYear)
             };
@@ -53,19 +54,19 @@ namespace NumerazioneProtocollo.Model.VarNames
 
         internal void UpdateDocumentFromHeadAndDataRow(DataGridViewRow rowAdded, Document document, DataGridView dataGridView_doc)
         {
-            var findString = findHeadString(dataGridView_doc);
+            var findString = FindHeadString(dataGridView_doc);
             if (findString != null)
             {
                 this._handleId1(rowAdded.Cells[findString.Value].Value, document);
             }
         }
 
-        private int? findHeadString(DataGridView dataGridView_doc)
+        private int? FindHeadString(DataGridView dataGridView_doc)
         {
-            return findHeadStringWithHeader(dataGridView_doc, this.v);
+            return FindHeadStringWithHeader(dataGridView_doc, this.v);
         }
 
-        public static int? findHeadStringWithHeader(DataGridView dataGridView_doc, string v)
+        public static int? FindHeadStringWithHeader(DataGridView dataGridView_doc, string v)
         {
             for (int i = 0; i < dataGridView_doc.Columns.Count; i++)
             {

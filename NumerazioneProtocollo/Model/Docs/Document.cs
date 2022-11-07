@@ -26,8 +26,9 @@ namespace NumerazioneProtocollo.Model.Docs
 
         private static object? GetValue(DataGridViewRow rowAdded, string docId, DataGridView dataGridView_doc)
         {
-            var id = Model.VarNames.VarNames.findHeadStringWithHeader(dataGridView_doc, docId);
-            if (id == null) return null;
+            var id = Model.VarNames.VarNames.FindHeadStringWithHeader(dataGridView_doc, docId);
+            if (id == null) 
+                return null;
 
             var x = rowAdded.Cells[id.Value];
 
@@ -170,6 +171,26 @@ namespace NumerazioneProtocollo.Model.Docs
             
             document.fileName = value;
             return document.fileName;
+
+        }
+
+        internal static object? HandleFilePath(object? arg1, Document document)
+        {
+            switch (arg1)
+            {
+                case null:
+                    return document.filePath;
+                case string idParamInt:
+                    document.filePath = idParamInt;
+                    return document.filePath;
+            }
+
+            var value = arg1.ToString();
+            if (value == null)
+                return document.filePath;
+
+            document.filePath = value;
+            return document.filePath;
 
         }
 
