@@ -1,6 +1,7 @@
 ﻿using Newtonsoft.Json;
 using NumerazioneProtocollo.Data;
 using NumerazioneProtocollo.Model.Cat;
+using NumerazioneProtocollo.Model.VarNames;
 
 namespace NumerazioneProtocollo.Model.Docs;
 
@@ -8,7 +9,7 @@ namespace NumerazioneProtocollo.Model.Docs;
 [JsonObject(MemberSerialization.Fields)]
 internal class Document
 {
-     public int? category;
+    public int? category;
     public DateTime? creationDate;
     public string? fileName;
     public string? filePath;
@@ -230,7 +231,8 @@ internal class Document
 
 
         Document document = new();
-        foreach (var head in Model.VarNames.HeadList.HeadListVar) head.UpdateDocumentFromHeadAndDataRow(rowAdded, document, dataGridView_doc);
+        foreach (var head in HeadList.HeadListVar)
+            head.UpdateDocumentFromHeadAndDataRow(rowAdded, document, dataGridView_doc);
 
 
         return document;

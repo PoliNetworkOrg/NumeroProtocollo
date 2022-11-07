@@ -3,5 +3,4 @@
 public class HeadList
 {
     internal static IEnumerable<VarNames> HeadListVar = VarNames.GenerateListDocumentsHead();
-
 }
