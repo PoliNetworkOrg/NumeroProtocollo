@@ -173,7 +173,7 @@ public partial class MainForm : Form
 
     private static void LoadFiles()
     {
-        Files.LoadFile(GlobalVariables.paths, Constants.PathOfPaths);
+        Files.LoadFile(GlobalVariables.paths, Constants.PathOfSettings);
 
         Files.LoadFile(GlobalVariables.docs, Data.Constants.GetPathDocuments());
         Files.LoadFile(GlobalVariables.categories, Data.Constants.GetPathCategories());
@@ -367,6 +367,7 @@ public partial class MainForm : Form
 
     private void Button_settings_Click(object sender, EventArgs e)
     {
-
+        Forms.SettingsForm settingsForm = new Forms.SettingsForm();
+        settingsForm.ShowDialog();
     }
 }

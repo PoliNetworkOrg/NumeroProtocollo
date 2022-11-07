@@ -11,5 +11,5 @@ internal class GlobalVariables
 {
     internal static Rif<Docs>? docs;
     internal static Rif<Categories>? categories;
-    internal static Rif<Model.Path.Paths>? paths;
+    internal static Rif<Model.Path.SettingsVar>? paths;
 }

@@ -9,9 +9,8 @@ namespace NumerazioneProtocollo.Model.Path
 {
     [Serializable]
     [JsonObject(MemberSerialization.Fields)]
-    internal class Paths
+    internal class SettingsVar
     {
-        public string? PathDocs;
-        public string? PathCategories;
+        public string? DirPath;
     }
 }
