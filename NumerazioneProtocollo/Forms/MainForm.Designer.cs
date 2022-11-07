@@ -41,8 +41,6 @@
             this.groupBox3 = new System.Windows.Forms.GroupBox();
             this.button_doc_ricarica = new System.Windows.Forms.Button();
             this.button_doc_elimina = new System.Windows.Forms.Button();
-            this.button_doc_modifica = new System.Windows.Forms.Button();
-            this.button_doc_crea = new System.Windows.Forms.Button();
             this.dataGridView_doc = new System.Windows.Forms.DataGridView();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDown_search_anno)).BeginInit();
             this.groupBox1.SuspendLayout();
@@ -154,8 +152,6 @@
             // 
             this.groupBox3.Controls.Add(this.button_doc_ricarica);
             this.groupBox3.Controls.Add(this.button_doc_elimina);
-            this.groupBox3.Controls.Add(this.button_doc_modifica);
-            this.groupBox3.Controls.Add(this.button_doc_crea);
             this.groupBox3.Controls.Add(this.dataGridView_doc);
             this.groupBox3.Location = new System.Drawing.Point(354, 12);
             this.groupBox3.Name = "groupBox3";
@@ -176,30 +172,13 @@
             // 
             // button_doc_elimina
             // 
-            this.button_doc_elimina.Location = new System.Drawing.Point(353, 394);
+            this.button_doc_elimina.Location = new System.Drawing.Point(17, 394);
             this.button_doc_elimina.Name = "button_doc_elimina";
             this.button_doc_elimina.Size = new System.Drawing.Size(75, 23);
             this.button_doc_elimina.TabIndex = 3;
             this.button_doc_elimina.Text = "Elimina";
             this.button_doc_elimina.UseVisualStyleBackColor = true;
-            // 
-            // button_doc_modifica
-            // 
-            this.button_doc_modifica.Location = new System.Drawing.Point(179, 394);
-            this.button_doc_modifica.Name = "button_doc_modifica";
-            this.button_doc_modifica.Size = new System.Drawing.Size(75, 23);
-            this.button_doc_modifica.TabIndex = 2;
-            this.button_doc_modifica.Text = "Modifica";
-            this.button_doc_modifica.UseVisualStyleBackColor = true;
-            // 
-            // button_doc_crea
-            // 
-            this.button_doc_crea.Location = new System.Drawing.Point(6, 394);
-            this.button_doc_crea.Name = "button_doc_crea";
-            this.button_doc_crea.Size = new System.Drawing.Size(75, 23);
-            this.button_doc_crea.TabIndex = 1;
-            this.button_doc_crea.Text = "Crea";
-            this.button_doc_crea.UseVisualStyleBackColor = true;
+            this.button_doc_elimina.Click += new System.EventHandler(this.Button_doc_elimina_Click);
             // 
             // dataGridView_doc
             // 
@@ -246,8 +225,6 @@
         private Label label1;
         private GroupBox groupBox3;
         private Button button_doc_elimina;
-        private Button button_doc_modifica;
-        private Button button_doc_crea;
         private DataGridView dataGridView_doc;
         private Button button_doc_ricarica;
     }

@@ -39,6 +39,30 @@ namespace NumerazioneProtocollo.Model.Docs
             return null;
         }
 
+        internal void Delete(int value)
+        {
+            int? indexList = GetIndexList(value);
+            if (indexList != null)
+            {
+                this.documents ??= new List<Document>();
+                this.documents.RemoveAt(indexList.Value);
+            }
+        }
+
+        private int? GetIndexList(int id)
+        {
+            this.documents ??= new List<Document>();
+            for (int i=0; i< this.documents.Count; i++)
+            {
+                var doc = this.documents[i];
+                if (doc == null) continue;
+                if (doc.id == id)
+                    return i;
+            }
+
+            return null;
+        }
+
         internal void HandleEdit(Document doc)
         {
             this.documents ??= new List<Document>(); 

@@ -66,15 +66,12 @@ namespace NumerazioneProtocollo
 
         private void RowEdit(int rowIndex)
         {
-            DataGridViewRow rowAdded = dataGridView_doc.Rows[rowIndex];
-
             Data.GlobalVariables.docs ??= new Rif<Docs>();
             Data.GlobalVariables.docs.obj ??= new Docs();
             Data.GlobalVariables.docs.obj.documents ??= new List<Document>();
-      
 
 
-            Document doc = Model.Docs.Document.Get(rowAdded, dataGridView_doc);
+            Document doc = getDoc(rowIndex);
            
 
             doc.creationDate ??= DateTime.Now;
@@ -86,6 +83,14 @@ namespace NumerazioneProtocollo
 
             Utils.Files.SaveFile(Data.GlobalVariables.docs, Data.Constants.PathDocs);
                     
+        }
+
+        private Document getDoc(int rowIndex)
+        {
+            DataGridViewRow rowAdded = dataGridView_doc.Rows[rowIndex];
+
+            Document doc = Model.Docs.Document.Get(rowAdded, dataGridView_doc);
+            return doc;
         }
 
         private int GetNewId()
@@ -235,6 +240,36 @@ namespace NumerazioneProtocollo
         private void Button_doc_ricarica_Click(object sender, EventArgs e)
         {
             Refresh_docs();
+        }
+
+        private void Button_doc_elimina_Click(object sender, EventArgs e)
+        {
+            int? rowId = getSelectedRow(dataGridView_doc);
+            if (rowId == null)
+                return;
+
+
+            var doc = getDoc(rowId.Value);
+            if (doc == null)
+                return;
+
+            if (doc.id == null) 
+                return;
+
+            Data.GlobalVariables.docs ??= new Rif<Docs>();
+            Data.GlobalVariables.docs.obj ??= new Docs();
+            Data.GlobalVariables.docs.obj.Delete(doc.id.Value);
+            Refresh_docs();
+
+        }
+
+        private int? getSelectedRow(DataGridView dataGridView_doc)
+        {
+            return dataGridView_doc.SelectedCells.Count > 0
+                ? dataGridView_doc.SelectedCells[0].RowIndex
+                : dataGridView_doc.SelectedRows.Count > 0 
+                    ? dataGridView_doc.SelectedRows[0].Index 
+                    : null;
         }
     }
 }
