@@ -28,27 +28,18 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.textBox1 = new System.Windows.Forms.TextBox();
-            this.button1 = new System.Windows.Forms.Button();
+            this.textBox_path_files = new System.Windows.Forms.TextBox();
             this.button2 = new System.Windows.Forms.Button();
             this.label1 = new System.Windows.Forms.Label();
             this.SuspendLayout();
             // 
-            // textBox1
+            // textBox_path_files
             // 
-            this.textBox1.Location = new System.Drawing.Point(21, 39);
-            this.textBox1.Name = "textBox1";
-            this.textBox1.Size = new System.Drawing.Size(559, 23);
-            this.textBox1.TabIndex = 0;
-            // 
-            // button1
-            // 
-            this.button1.Location = new System.Drawing.Point(254, 68);
-            this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(211, 39);
-            this.button1.TabIndex = 2;
-            this.button1.Text = "Salva";
-            this.button1.UseVisualStyleBackColor = true;
+            this.textBox_path_files.Location = new System.Drawing.Point(21, 39);
+            this.textBox_path_files.Name = "textBox_path_files";
+            this.textBox_path_files.Size = new System.Drawing.Size(559, 23);
+            this.textBox_path_files.TabIndex = 0;
+            this.textBox_path_files.TextChanged += new System.EventHandler(this.textBox_path_files_TextChanged);
             // 
             // button2
             // 
@@ -58,6 +49,7 @@
             this.button2.TabIndex = 3;
             this.button2.Text = "Scegli cartella...";
             this.button2.UseVisualStyleBackColor = true;
+            this.button2.Click += new System.EventHandler(this.button2_Click);
             // 
             // label1
             // 
@@ -72,13 +64,13 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(708, 118);
+            this.ClientSize = new System.Drawing.Size(708, 79);
             this.Controls.Add(this.label1);
             this.Controls.Add(this.button2);
-            this.Controls.Add(this.button1);
-            this.Controls.Add(this.textBox1);
+            this.Controls.Add(this.textBox_path_files);
             this.Name = "SettingsForm";
             this.Text = "SettingsForm";
+            this.Load += new System.EventHandler(this.SettingsForm_Load);
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -86,8 +78,7 @@
 
         #endregion
 
-        private TextBox textBox1;
-        private Button button1;
+        private TextBox textBox_path_files;
         private Button button2;
         private Label label1;
     }
