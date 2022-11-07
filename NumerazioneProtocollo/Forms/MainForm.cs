@@ -28,8 +28,8 @@ namespace NumerazioneProtocollo
 
 
 
-            Data.GlobalVariables.docs.obj ??= new Docs();
-            Data.GlobalVariables.categories.obj ??= new  Model.Cat.Categories();
+            Data.GlobalVariables.docs.Obj ??= new Docs();
+            Data.GlobalVariables.categories.Obj ??= new  Model.Cat.Categories();
 
             LoadCategories();
             LoadDocuments();
@@ -68,8 +68,8 @@ namespace NumerazioneProtocollo
         private void RowEdit(int rowIndex)
         {
             Data.GlobalVariables.docs ??= new Rif<Docs>();
-            Data.GlobalVariables.docs.obj ??= new Docs();
-            Data.GlobalVariables.docs.obj.documents ??= new List<Document>();
+            Data.GlobalVariables.docs.Obj ??= new Docs();
+            Data.GlobalVariables.docs.Obj.documents ??= new List<Document>();
 
 
             Document doc = GetDoc(rowIndex);
@@ -80,7 +80,7 @@ namespace NumerazioneProtocollo
             doc.category ??= 0;
             doc.id ??= GetNewId();
 
-            Data.GlobalVariables.docs.obj.HandleEdit(doc);
+            Data.GlobalVariables.docs.Obj.HandleEdit(doc);
 
             Utils.Files.SaveFile(Data.GlobalVariables.docs, Data.Constants.PathDocs);
                     
@@ -98,10 +98,10 @@ namespace NumerazioneProtocollo
         {
 
             Data.GlobalVariables.docs ??= new Rif<Docs>();
-            Data.GlobalVariables.docs.obj ??= new Docs();
-            Data.GlobalVariables.docs.obj.documents ??= new List<Document>();
+            Data.GlobalVariables.docs.Obj ??= new Docs();
+            Data.GlobalVariables.docs.Obj.documents ??= new List<Document>();
 
-            var x = Data.GlobalVariables.docs.obj.documents
+            var x = Data.GlobalVariables.docs.Obj.documents
                 .Where(x => (x.year == numericUpDown_search_anno.Value || true == false ))
                 .Where(x => (( x.category == this.categoryIdSelected) && x.category != null))
                 .Select(x => x.id)
@@ -121,11 +121,11 @@ namespace NumerazioneProtocollo
         private void LoadCategories()
         {
             Data.GlobalVariables.categories ??= new Rif<Model.Cat.Categories>();
-            Data.GlobalVariables.categories.obj ??= new Model.Cat.Categories();
-            Data.GlobalVariables.categories.obj.categories ??= new List<Model.Cat.Category>();
+            Data.GlobalVariables.categories.Obj ??= new Model.Cat.Categories();
+            Data.GlobalVariables.categories.Obj.categories ??= new List<Model.Cat.Category>();
  
 
-            if (Data.GlobalVariables.categories.obj.categories.Count == 0)
+            if (Data.GlobalVariables.categories.Obj.categories.Count == 0)
             {
                 Model.Cat.Category category = new()
                 {
@@ -134,7 +134,7 @@ namespace NumerazioneProtocollo
                     Name = "Generale", 
                     Description = "Categoria generale di default"
                 };
-                Data.GlobalVariables.categories.obj.categories.Add(category);
+                Data.GlobalVariables.categories.Obj.categories.Add(category);
             }
 
             Refresh_categories();
@@ -164,12 +164,12 @@ namespace NumerazioneProtocollo
         private void Refresh_categories()
         {
             Data.GlobalVariables.categories ??= new Rif<Model.Cat.Categories>();
-            Data.GlobalVariables.categories.obj ??= new Model.Cat.Categories();
-            Data.GlobalVariables.categories.obj.categories ??= new List<Model.Cat.Category>();
+            Data.GlobalVariables.categories.Obj ??= new Model.Cat.Categories();
+            Data.GlobalVariables.categories.Obj.categories ??= new List<Model.Cat.Category>();
 
             listBox_cat.Items.Clear();  
 
-            foreach (var cat in Data.GlobalVariables.categories.obj.categories)
+            foreach (var cat in Data.GlobalVariables.categories.Obj.categories)
             {
                 if (cat == null) continue;
                 var catString = cat.ToString();
@@ -201,26 +201,24 @@ namespace NumerazioneProtocollo
             dataTable.Rows.Clear();
       
 
-            if (Data.GlobalVariables.docs is { obj.documents: { } })
-                for (int i = 0; i < Data.GlobalVariables.docs.obj.documents.Count; i++)
+            if (Data.GlobalVariables.docs is { Obj.documents: { } })
+                for (int i = 0; i < Data.GlobalVariables.docs.Obj.documents.Count; i++)
                 {
-                    Document? row = Data.GlobalVariables.docs.obj.documents[i];
-                    if (row.id != null)
+                    Document? row = Data.GlobalVariables.docs.Obj.documents[i];
+                    if (row.id == null) continue;
+                    var contained = row.fileName?.ToLower().Contains(text);
+                    if (!string.IsNullOrEmpty(text) && (contained == null || !contained.Value)) continue;
+                    if (row.category != categoryIdSelected) continue;
+                    if (this.numericUpDown_search_anno.Value != row.year && row.year != null)
+                        continue;
+                    DataRow row2 = dataTable.NewRow();
+                    foreach (var docHead in Document.headList)
                     {
-                        var contained = row.fileName?.ToLower().Contains(text);
-                        if (!string.IsNullOrEmpty(text) && (contained == null || !contained.Value)) continue;
-                        if (row.category != categoryIdSelected) continue;
-                        if (this.numericUpDown_search_anno.Value != row.year && row.year != null)
-                            continue;
-                        DataRow row2 = dataTable.NewRow();
-                        foreach (var docHead in Document.headList)
-                        {
-                            row2[docHead.GetName()] = docHead.GetValue(row);
-                        }
-
-
-                        dataTable.Rows.Add(row2);
+                        row2[docHead.GetName()] = docHead.GetValue(row);
                     }
+
+
+                    dataTable.Rows.Add(row2);
                 }
 
             dataGridView_doc.DataSource = dataTable;
@@ -271,8 +269,8 @@ namespace NumerazioneProtocollo
                 return;
 
             Data.GlobalVariables.docs ??= new Rif<Docs>();
-            Data.GlobalVariables.docs.obj ??= new Docs();
-            Data.GlobalVariables.docs.obj.Delete(doc.id.Value);
+            Data.GlobalVariables.docs.Obj ??= new Docs();
+            Data.GlobalVariables.docs.Obj.Delete(doc.id.Value);
             Refresh_docs();
         }
 
@@ -291,8 +289,8 @@ namespace NumerazioneProtocollo
             var name = textBox_cat.Text;
 
             Data.GlobalVariables.categories ??= new Rif<Model.Cat.Categories>();
-            Data.GlobalVariables.categories.obj ??= new Model.Cat.Categories();
-            Data.GlobalVariables.categories.obj.Add(name);
+            Data.GlobalVariables.categories.Obj ??= new Model.Cat.Categories();
+            Data.GlobalVariables.categories.Obj.Add(name);
 
             Refresh_categories();
             Utils.Files.SaveFile(Data.GlobalVariables.categories, Data.Constants.PathCategories);
@@ -345,8 +343,8 @@ namespace NumerazioneProtocollo
             var idCategorySelected = GetCategorySelected();
             if (idCategorySelected == null) return;
             Data.GlobalVariables.categories ??= new Rif<Model.Cat.Categories>();
-            Data.GlobalVariables.categories.obj ??= new Model.Cat.Categories();
-            Data.GlobalVariables.categories.obj.EditName(idCategorySelected.Value, text);
+            Data.GlobalVariables.categories.Obj ??= new Model.Cat.Categories();
+            Data.GlobalVariables.categories.Obj.EditName(idCategorySelected.Value, text);
             Utils.Files.SaveFile(Data.GlobalVariables.categories, Data.Constants.PathCategories);
             Refresh_categories();
         }
@@ -358,8 +356,8 @@ namespace NumerazioneProtocollo
             var idCategorySelected = GetCategorySelected();
             if (idCategorySelected == null) return;
             Data.GlobalVariables.categories ??= new Rif<Model.Cat.Categories>();
-            Data.GlobalVariables.categories.obj ??= new Model.Cat.Categories();
-            Data.GlobalVariables.categories.obj.DeleteFromId(idCategorySelected.Value);
+            Data.GlobalVariables.categories.Obj ??= new Model.Cat.Categories();
+            Data.GlobalVariables.categories.Obj.DeleteFromId(idCategorySelected.Value);
             Utils.Files.SaveFile(Data.GlobalVariables.categories, Data.Constants.PathCategories);
             Refresh_categories();
         }

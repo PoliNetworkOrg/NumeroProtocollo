@@ -1,12 +1,4 @@
 ﻿using Newtonsoft.Json;
-using System;
-using System.Collections.Generic;
-using System.Data;
-using System.Linq;
-using System.Reflection.Metadata;
-using System.Security.Cryptography;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace NumerazioneProtocollo.Model.Docs
 {
@@ -105,7 +97,7 @@ namespace NumerazioneProtocollo.Model.Docs
             }
             catch
             {
-                ;
+                // ignored
             }
 
             return null;
@@ -123,7 +115,7 @@ namespace NumerazioneProtocollo.Model.Docs
             }
             catch
             {
-                ;
+                // ignored
             }
 
             return null;
@@ -237,8 +229,8 @@ namespace NumerazioneProtocollo.Model.Docs
         internal static Document Get(DataGridViewRow rowAdded, DataGridView dataGridView_doc)
         {
             Data.GlobalVariables.docs ??= new Rif<Docs>();
-            Data.GlobalVariables.docs.obj ??= new Docs();
-            Data.GlobalVariables.docs.obj.documents ??= new List<Document>();
+            Data.GlobalVariables.docs.Obj ??= new Docs();
+            Data.GlobalVariables.docs.Obj.documents ??= new List<Document>();
             
             Document? doc = Docs.Get(rowAdded, dataGridView_doc);
             if (doc != null)

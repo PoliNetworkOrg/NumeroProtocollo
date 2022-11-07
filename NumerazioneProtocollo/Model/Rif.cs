@@ -1,9 +1,4 @@
 ﻿using Newtonsoft.Json;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace NumerazioneProtocollo.Model
 {
@@ -12,10 +7,10 @@ namespace NumerazioneProtocollo.Model
 
     internal class Rif<T>
     {
-        public T? obj;
+        public T? Obj;
 
         public Rif() { 
-            obj = default(T);
+            Obj = default(T);
         }
     }
 }

@@ -17,10 +17,10 @@ namespace NumerazioneProtocollo.Model.Cat
 
         public static string? GetCategoryName(int? category)
         {
-            if (Data.GlobalVariables.categories is not { obj.categories: { } }) 
+            if (Data.GlobalVariables.categories is not { Obj.categories: { } }) 
                 return null;
             
-            foreach (var cat in Data.GlobalVariables.categories.obj.categories)
+            foreach (var cat in Data.GlobalVariables.categories.Obj.categories)
             {
                 if (cat == null) continue;
                 if (cat.Id == category)
@@ -62,9 +62,9 @@ namespace NumerazioneProtocollo.Model.Cat
             for (int i=0; i<this.categories.Count; i++)
             {
                 var cat = this.categories[i];
-                if (cat is { Name: { } })
-                    if (cat.Name.ToLower() == nameLower)
-                        return new Tuple<bool>(true);
+                if (cat is not { Name: { } }) continue;
+                if (cat.Name.ToLower() == nameLower)
+                    return new Tuple<bool>(true);
             }
 
             return new Tuple<bool>(false);
@@ -78,9 +78,9 @@ namespace NumerazioneProtocollo.Model.Cat
             for (int i = 0; i < this.categories.Count; i++)
             {
                 var cat = this.categories[i];
-                if (cat is { Id: { } })
-                    if (cat.Id == id)
-                        return new Tuple<bool, int>(true, i);
+                if (cat is not { Id: { } }) continue;
+                if (cat.Id == id)
+                    return new Tuple<bool, int>(true, i);
             }
 
             return new Tuple<bool, int>(false, -1);

@@ -17,17 +17,17 @@ namespace NumerazioneProtocollo.Model.Docs
         internal static Document? Get(DataGridViewRow rowAdded, DataGridView dataGridView_doc)
         {
             Data.GlobalVariables.docs ??= new Rif<Docs>();
-            Data.GlobalVariables.docs.obj ??= new Docs();
-            Data.GlobalVariables.docs.obj.documents ??= new List<Document>();
+            Data.GlobalVariables.docs.Obj ??= new Docs();
+            Data.GlobalVariables.docs.Obj.documents ??= new List<Document>();
 
             int? id = Model.Docs.Document.GetId(rowAdded, dataGridView_doc);
             int? category = Model.Docs.Document.GetCategory(rowAdded, dataGridView_doc);
             if (id == null || category == null)
                 return null;
 
-            for (int i=0; i< Data.GlobalVariables.docs.obj.documents.Count; i++)
+            for (int i=0; i< Data.GlobalVariables.docs.Obj.documents.Count; i++)
             {
-                var x = Data.GlobalVariables.docs.obj.documents[i];
+                var x = Data.GlobalVariables.docs.Obj.documents[i];
                 if (x == null) 
                     continue;
 

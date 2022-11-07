@@ -1,11 +1,5 @@
 ﻿using Newtonsoft.Json.Linq;
 using NumerazioneProtocollo.Model;
-using NumerazioneProtocollo.Model.Docs;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace NumerazioneProtocollo.Utils
 {
@@ -23,7 +17,7 @@ namespace NumerazioneProtocollo.Utils
             var objRead = Newtonsoft.Json.JsonConvert.DeserializeObject<T>(jsonRead);
             if (rif != null)
             {
-                rif.obj = objRead;
+                rif.Obj = objRead;
             }
         }
 
@@ -32,7 +26,7 @@ namespace NumerazioneProtocollo.Utils
             if (rif == null)
                 return;
 
-            var json = Newtonsoft.Json.JsonConvert.SerializeObject(rif.obj);
+            var json = Newtonsoft.Json.JsonConvert.SerializeObject(rif.Obj);
             File.WriteAllText(path, json);
         }
     }
