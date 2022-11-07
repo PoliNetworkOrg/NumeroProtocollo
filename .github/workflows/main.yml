@@ -35,7 +35,7 @@ jobs:
       if: ${{ github.actor != 'dependabot[bot]' && github.ref == 'refs/heads/main' && github.event_name == 'push' }}
       uses: softprops/action-gh-release@v1
       with:
-        files: "/home/runner/work/NumerazioneProtocollo/NumerazioneProtocollo/bin/Release/net6.0/NumerazioneProtocollo.zip"
+        files: "D:\\a\\NumeroProtocollo\\NumeroProtocollo\\NumerazioneProtocollo\\bin\\Debug\\net6.0-windows\\NumerazioneProtocollo.dll"
         tag_name: ${{ steps.date.outputs.date }}
         token: ${{ secrets.RELEASES_TOKEN }} 
    
