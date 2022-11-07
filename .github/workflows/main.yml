@@ -24,7 +24,7 @@ jobs:
       run: dotnet restore
       
     - name: Build
-      run: dotnet build PoliFemoBackend.csproj /p:DeployOnBuild=true /p:Configuration=Release /p:Platform="x64" /p:PublishProfile=Properties/PublishProfiles/linux-x64.pubxml
+      run: dotnet build NumerazioneProtocollo.sln /p:DeployOnBuild=true /p:Configuration=Release /p:Platform="x64" /p:PublishProfile=Properties/PublishProfiles/linux-x64.pubxml
 
     - name: Get current date
       continue-on-error: true
@@ -35,16 +35,10 @@ jobs:
       if: ${{ github.actor != 'dependabot[bot]' && github.ref == 'refs/heads/main' && github.event_name == 'push' }}
       uses: softprops/action-gh-release@v1
       with:
-        files: "/home/runner/work/PoliFemoBackend/PoliFemoBackend/bin/Release/net6.0/PoliFemoBackend.zip"
+        files: "/home/runner/work/NumerazioneProtocollo/NumerazioneProtocollo/bin/Release/net6.0/NumerazioneProtocollo.zip"
         tag_name: ${{ steps.date.outputs.date }}
         token: ${{ secrets.RELEASES_TOKEN }} 
    
-    - name: Create Artifact
-      if: ${{ github.actor != 'dependabot[bot]' && github.ref == 'refs/heads/dev' && github.event_name == 'push' }} 
-      uses: actions/upload-artifact@v3
-      with:
-        name: polifemo-dev-build
-        path: /home/runner/work/PoliFemoBackend/PoliFemoBackend/bin/Release/net6.0/PoliFemoBackend.zip
 
 
   
