@@ -45,7 +45,7 @@
             this.button_doc_ricarica = new System.Windows.Forms.Button();
             this.button_doc_elimina = new System.Windows.Forms.Button();
             this.dataGridView_doc = new System.Windows.Forms.DataGridView();
-            this.button1 = new System.Windows.Forms.Button();
+            this.button_settings = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDown_search_anno)).BeginInit();
             this.groupBox1.SuspendLayout();
             this.groupBox2.SuspendLayout();
@@ -186,7 +186,7 @@
             // 
             // groupBox3
             // 
-            this.groupBox3.Controls.Add(this.button1);
+            this.groupBox3.Controls.Add(this.button_settings);
             this.groupBox3.Controls.Add(this.button_doc_ricarica);
             this.groupBox3.Controls.Add(this.button_doc_elimina);
             this.groupBox3.Controls.Add(this.dataGridView_doc);
@@ -226,14 +226,15 @@
             this.dataGridView_doc.Size = new System.Drawing.Size(759, 366);
             this.dataGridView_doc.TabIndex = 0;
             // 
-            // button1
+            // button_settings
             // 
-            this.button1.Location = new System.Drawing.Point(666, 394);
-            this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(99, 23);
-            this.button1.TabIndex = 5;
-            this.button1.Text = "Impostazioni";
-            this.button1.UseVisualStyleBackColor = true;
+            this.button_settings.Location = new System.Drawing.Point(666, 394);
+            this.button_settings.Name = "button_settings";
+            this.button_settings.Size = new System.Drawing.Size(99, 23);
+            this.button_settings.TabIndex = 5;
+            this.button_settings.Text = "Impostazioni";
+            this.button_settings.UseVisualStyleBackColor = true;
+            this.button_settings.Click += new System.EventHandler(this.Button_settings_Click);
             // 
             // MainForm
             // 
@@ -276,6 +277,6 @@
         private Label label3;
         private TextBox textBox_search_id_doc;
         private Label label2;
-        private Button button1;
+        private Button button_settings;
     }
 }

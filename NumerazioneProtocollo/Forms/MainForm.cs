@@ -364,4 +364,9 @@ public partial class MainForm : Form
     {
         Refresh_docs();
     }
+
+    private void Button_settings_Click(object sender, EventArgs e)
+    {
+
+    }
 }
