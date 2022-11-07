@@ -35,8 +35,8 @@ namespace NumerazioneProtocollo.Model.Cat
         internal void Add(string name)
         {
             this.categories ??= new List<Category>();
-            bool isPresent = GetIfPresent(name);
-            if (!isPresent)
+            var isPresent = GetIfPresentFromName(name);
+            if (!isPresent.Item1)
             {
                 Category cat = new()
                 {
@@ -65,7 +65,7 @@ namespace NumerazioneProtocollo.Model.Cat
             return 1;
         }
 
-        private bool GetIfPresent(string name)
+        private Tuple<bool> GetIfPresentFromName(string name)
         {
             var nameLower = name.ToLower();
             this.categories ??= new List<Category>();
@@ -76,11 +76,51 @@ namespace NumerazioneProtocollo.Model.Cat
                 {
                     if (cat.Name != null)
                         if (cat.Name.ToLower() == nameLower)
-                        return true;
+                        return new Tuple<bool>(true);
                 }
             }
 
-            return false;
+            return new Tuple<bool>(false);
+        }
+
+
+        private Tuple<bool, int> GetIfPresentFromId(int id)
+        {
+
+            this.categories ??= new List<Category>();
+            for (int i = 0; i < this.categories.Count; i++)
+            {
+                var cat = this.categories[i];
+                if (cat != null)
+                {
+                    if (cat.Id != null)
+                        if (cat.Id == id)
+                            return new Tuple<bool, int>(true, i);
+                }
+            }
+
+            return new Tuple<bool, int>(false, -1);
+        }
+
+        internal void EditName(int value, string text)
+        {
+            this.categories ??= new List<Category>();
+            var present = GetIfPresentFromId(value);
+            if (present.Item1)
+            {
+                var cat = this.categories[present.Item2];
+                cat.Name = text;
+            }
+        }
+
+        internal void DeleteFromId(int value)
+        {
+            this.categories ??= new List<Category>();
+            var present = GetIfPresentFromId(value);
+            if (present.Item1)
+            {
+                this.categories.RemoveAt(present.Item2);
+            }
         }
     }
 }

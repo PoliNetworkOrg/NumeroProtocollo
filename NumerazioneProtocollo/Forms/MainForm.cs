@@ -2,6 +2,7 @@ using Newtonsoft.Json.Linq;
 using NumerazioneProtocollo.Model;
 using NumerazioneProtocollo.Model.Docs;
 using System.Data;
+using static System.Net.Mime.MediaTypeNames;
 
 namespace NumerazioneProtocollo
 {
@@ -303,15 +304,18 @@ namespace NumerazioneProtocollo
 
         private void Button_cat_modifica_Click(object sender, EventArgs e)
         {
-            DialogResult dialogResult = MessageBox.Show(
-            "Vuoi veramente modificare il nome della categoria? E' un'operazione che non si dovrebbe fare con leggerezza.",
-            "Sei sicuro?",
-            MessageBoxButtons.YesNo
-        );
-
-            if (dialogResult == DialogResult.Yes)
+            if (!string.IsNullOrEmpty(textBox_cat.Text))
             {
-                Edit_cat_selected();
+                DialogResult dialogResult = MessageBox.Show(
+                    "Vuoi veramente modificare il nome della categoria? E' un'operazione che non si dovrebbe fare con leggerezza.",
+                    "Sei sicuro?",
+                    MessageBoxButtons.YesNo
+                );
+
+                if (dialogResult == DialogResult.Yes)
+                {
+                    Edit_cat_selected(textBox_cat.Text);
+                }
             }
         }
 
@@ -319,10 +323,10 @@ namespace NumerazioneProtocollo
         private void Button_cat_elimina_Click(object sender, EventArgs e)
         {
             DialogResult dialogResult = MessageBox.Show(
-     "Vuoi veramente cancellare la categoria? E' un'operazione che non si dovrebbe fare con leggerezza.",
-     "Sei sicuro?",
-     MessageBoxButtons.YesNo
- );
+                "Vuoi veramente cancellare la categoria? E' un'operazione che non si dovrebbe fare con leggerezza.",
+                "Sei sicuro?",
+                MessageBoxButtons.YesNo
+            );
 
             if (dialogResult == DialogResult.Yes)
             {
@@ -345,12 +349,16 @@ namespace NumerazioneProtocollo
             return null;
         }
 
-        private void Edit_cat_selected()
+        private void Edit_cat_selected(string text)
         {
             int? idCategorySelected = GetCategorySelected();
             if (idCategorySelected != null)
             {
-
+                Data.GlobalVariables.categories ??= new Rif<Model.Cat.Categories>();
+                Data.GlobalVariables.categories.obj ??= new Model.Cat.Categories();
+                Data.GlobalVariables.categories.obj.EditName(idCategorySelected.Value, text);
+                Utils.Files.SaveFile(Data.GlobalVariables.categories, Data.Constants.PathCategories);
+                Refresh_categories();
             }
         }
 
@@ -361,7 +369,11 @@ namespace NumerazioneProtocollo
             int? idCategorySelected = GetCategorySelected();
             if (idCategorySelected != null)
             {
-
+                Data.GlobalVariables.categories ??= new Rif<Model.Cat.Categories>();
+                Data.GlobalVariables.categories.obj ??= new Model.Cat.Categories();
+                Data.GlobalVariables.categories.obj.DeleteFromId(idCategorySelected.Value);
+                Utils.Files.SaveFile(Data.GlobalVariables.categories, Data.Constants.PathCategories);
+                Refresh_categories();
             }
         }
     }
