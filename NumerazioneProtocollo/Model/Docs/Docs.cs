@@ -41,12 +41,10 @@ namespace NumerazioneProtocollo.Model.Docs
 
         internal void Delete(int value)
         {
-            int? indexList = GetIndexList(value);
-            if (indexList != null)
-            {
-                this.documents ??= new List<Document>();
-                this.documents.RemoveAt(indexList.Value);
-            }
+            var indexList = GetIndexList(value);
+            if (indexList == null) return;
+            this.documents ??= new List<Document>();
+            this.documents.RemoveAt(indexList.Value);
         }
 
         private int? GetIndexList(int id)

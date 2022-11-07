@@ -22,11 +22,9 @@ namespace NumerazioneProtocollo.Model.Cat
             
             foreach (var cat in Data.GlobalVariables.categories.obj.categories)
             {
-                if (cat != null)
-                {
-                    if (cat.Id == category)
-                        return cat.Name;
-                }
+                if (cat == null) continue;
+                if (cat.Id == category)
+                    return cat.Name;
             }
 
             return null;
@@ -36,33 +34,25 @@ namespace NumerazioneProtocollo.Model.Cat
         {
             this.categories ??= new List<Category>();
             var isPresent = GetIfPresentFromName(name);
-            if (!isPresent.Item1)
+            if (isPresent.Item1) return;
+            Category cat = new()
             {
-                Category cat = new()
-                {
-                    creationDate = DateTime.Now,
-                    Name= name,
-                    Id = GetNewIdCat(), 
-                    Description = null
-                };
-                this.categories.Add(cat);
-            }
+                creationDate = DateTime.Now,
+                Name= name,
+                Id = GetNewIdCat(), 
+                Description = null
+            };
+            this.categories.Add(cat);
         }
 
         private int? GetNewIdCat()
         {
             this.categories ??= new List<Category>();
             var x = this.categories.Select(x => x.Id).Where(x => x != null).ToList();
-            if (x.Count > 0)
-            {
-                var max = x.Max();
-                if (max != null)
-                {
-                    return max.Value + 1;
-                }
-            }
-
-            return 1;
+            if (x.Count <= 0) 
+                return 1;
+            var max = x.Max();
+            return max != null ? max.Value + 1 : 1;
         }
 
         private Tuple<bool> GetIfPresentFromName(string name)
@@ -72,12 +62,9 @@ namespace NumerazioneProtocollo.Model.Cat
             for (int i=0; i<this.categories.Count; i++)
             {
                 var cat = this.categories[i];
-                if (cat != null)
-                {
-                    if (cat.Name != null)
-                        if (cat.Name.ToLower() == nameLower)
+                if (cat is { Name: { } })
+                    if (cat.Name.ToLower() == nameLower)
                         return new Tuple<bool>(true);
-                }
             }
 
             return new Tuple<bool>(false);
@@ -91,12 +78,9 @@ namespace NumerazioneProtocollo.Model.Cat
             for (int i = 0; i < this.categories.Count; i++)
             {
                 var cat = this.categories[i];
-                if (cat != null)
-                {
-                    if (cat.Id != null)
-                        if (cat.Id == id)
-                            return new Tuple<bool, int>(true, i);
-                }
+                if (cat is { Id: { } })
+                    if (cat.Id == id)
+                        return new Tuple<bool, int>(true, i);
             }
 
             return new Tuple<bool, int>(false, -1);
@@ -106,11 +90,9 @@ namespace NumerazioneProtocollo.Model.Cat
         {
             this.categories ??= new List<Category>();
             var present = GetIfPresentFromId(value);
-            if (present.Item1)
-            {
-                var cat = this.categories[present.Item2];
-                cat.Name = text;
-            }
+            if (!present.Item1) return;
+            var cat = this.categories[present.Item2];
+            cat.Name = text;
         }
 
         internal void DeleteFromId(int value)

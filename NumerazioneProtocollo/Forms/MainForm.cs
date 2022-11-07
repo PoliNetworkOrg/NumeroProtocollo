@@ -156,11 +156,9 @@ namespace NumerazioneProtocollo
             }
 
             var cat = (Model.Cat.Category)this.listBox_cat.Items[this.listBox_cat.SelectedIndex];
-            if (cat.Id != null)
-            {
-                this.categoryIdSelected = cat.Id.Value;
-                Refresh_docs();
-            }
+            if (cat.Id == null) return;
+            this.categoryIdSelected = cat.Id.Value;
+            Refresh_docs();
         }
 
         private void Refresh_categories()
@@ -173,12 +171,10 @@ namespace NumerazioneProtocollo
 
             foreach (var cat in Data.GlobalVariables.categories.obj.categories)
             {
-                if (cat != null)
-                {
-                    var catString = cat.ToString();
-                    if (!string.IsNullOrEmpty(catString))
-                        listBox_cat.Items.Add(cat);
-                }
+                if (cat == null) continue;
+                var catString = cat.ToString();
+                if (!string.IsNullOrEmpty(catString))
+                    listBox_cat.Items.Add(cat);
             }
 
             Model.Cat.Category cat_null = new() { Id= null, Name = "[all]", Description = "", creationDate = null };
@@ -212,23 +208,18 @@ namespace NumerazioneProtocollo
                     if (row.id != null)
                     {
                         var contained = row.fileName?.ToLower().Contains(text);
-                        if (string.IsNullOrEmpty(text) || (contained != null && contained.Value))
+                        if (!string.IsNullOrEmpty(text) && (contained == null || !contained.Value)) continue;
+                        if (row.category != categoryIdSelected) continue;
+                        if (this.numericUpDown_search_anno.Value != row.year && row.year != null)
+                            continue;
+                        DataRow row2 = dataTable.NewRow();
+                        foreach (var docHead in Document.headList)
                         {
-                            if (row.category == categoryIdSelected)
-                            {
-                                if (true == false || this.numericUpDown_search_anno.Value == row.year || row.year == null)
-                                {
-                                    DataRow row2 = dataTable.NewRow();
-                                    foreach (var docHead in Document.headList)
-                                    {
-                                        row2[docHead.GetName()] = docHead.GetValue(row);
-                                    }
-
-
-                                    dataTable.Rows.Add(row2);
-                                }
-                            }
+                            row2[docHead.GetName()] = docHead.GetValue(row);
                         }
+
+
+                        dataTable.Rows.Add(row2);
                     }
                 }
 
@@ -296,33 +287,29 @@ namespace NumerazioneProtocollo
 
         private void Button_cat_crea_Click(object sender, EventArgs e)
         {
-            if (!string.IsNullOrEmpty(textBox_cat.Text))
-            {
-                var name = textBox_cat.Text;
+            if (string.IsNullOrEmpty(textBox_cat.Text)) return;
+            var name = textBox_cat.Text;
 
-                Data.GlobalVariables.categories ??= new Rif<Model.Cat.Categories>();
-                Data.GlobalVariables.categories.obj ??= new Model.Cat.Categories();
-                Data.GlobalVariables.categories.obj.Add(name);
+            Data.GlobalVariables.categories ??= new Rif<Model.Cat.Categories>();
+            Data.GlobalVariables.categories.obj ??= new Model.Cat.Categories();
+            Data.GlobalVariables.categories.obj.Add(name);
 
-                Refresh_categories();
-                Utils.Files.SaveFile(Data.GlobalVariables.categories, Data.Constants.PathCategories);
-            }
+            Refresh_categories();
+            Utils.Files.SaveFile(Data.GlobalVariables.categories, Data.Constants.PathCategories);
         }
 
         private void Button_cat_modifica_Click(object sender, EventArgs e)
         {
-            if (!string.IsNullOrEmpty(textBox_cat.Text))
-            {
-                DialogResult dialogResult = MessageBox.Show(
-                    "Vuoi veramente modificare il nome della categoria? E' un'operazione che non si dovrebbe fare con leggerezza.",
-                    "Sei sicuro?",
-                    MessageBoxButtons.YesNo
-                );
+            if (string.IsNullOrEmpty(textBox_cat.Text)) return;
+            DialogResult dialogResult = MessageBox.Show(
+                "Vuoi veramente modificare il nome della categoria? E' un'operazione che non si dovrebbe fare con leggerezza.",
+                "Sei sicuro?",
+                MessageBoxButtons.YesNo
+            );
 
-                if (dialogResult == DialogResult.Yes)
-                {
-                    Edit_cat_selected(textBox_cat.Text);
-                }
+            if (dialogResult == DialogResult.Yes)
+            {
+                Edit_cat_selected(textBox_cat.Text);
             }
         }
 
@@ -335,25 +322,19 @@ namespace NumerazioneProtocollo
                 MessageBoxButtons.YesNo
             );
 
-            if (dialogResult == DialogResult.Yes)
-            {
-                Delete_cat_selected();
-                Changed_category(null, EventArgs.Empty);
+            if (dialogResult != DialogResult.Yes) return;
+            Delete_cat_selected();
+            Changed_category(null, EventArgs.Empty);
 
-
-            }
-         
         }
 
         private int? GetCategorySelected()
         {
-            if (listBox_cat.SelectedIndex >= 0 && listBox_cat.SelectedIndex < listBox_cat.Items.Count)
+            if (listBox_cat.SelectedIndex < 0 || listBox_cat.SelectedIndex >= listBox_cat.Items.Count) return null;
+            var cat =(Model.Cat.Category) listBox_cat.Items[listBox_cat.SelectedIndex];
+            if (cat != null)
             {
-                var cat =(Model.Cat.Category) listBox_cat.Items[listBox_cat.SelectedIndex];
-                if (cat != null)
-                {
-                    return cat.Id;
-                }
+                return cat.Id;
             }
 
             return null;
@@ -361,30 +342,26 @@ namespace NumerazioneProtocollo
 
         private void Edit_cat_selected(string text)
         {
-            int? idCategorySelected = GetCategorySelected();
-            if (idCategorySelected != null)
-            {
-                Data.GlobalVariables.categories ??= new Rif<Model.Cat.Categories>();
-                Data.GlobalVariables.categories.obj ??= new Model.Cat.Categories();
-                Data.GlobalVariables.categories.obj.EditName(idCategorySelected.Value, text);
-                Utils.Files.SaveFile(Data.GlobalVariables.categories, Data.Constants.PathCategories);
-                Refresh_categories();
-            }
+            var idCategorySelected = GetCategorySelected();
+            if (idCategorySelected == null) return;
+            Data.GlobalVariables.categories ??= new Rif<Model.Cat.Categories>();
+            Data.GlobalVariables.categories.obj ??= new Model.Cat.Categories();
+            Data.GlobalVariables.categories.obj.EditName(idCategorySelected.Value, text);
+            Utils.Files.SaveFile(Data.GlobalVariables.categories, Data.Constants.PathCategories);
+            Refresh_categories();
         }
 
      
 
         private void Delete_cat_selected()
         {
-            int? idCategorySelected = GetCategorySelected();
-            if (idCategorySelected != null)
-            {
-                Data.GlobalVariables.categories ??= new Rif<Model.Cat.Categories>();
-                Data.GlobalVariables.categories.obj ??= new Model.Cat.Categories();
-                Data.GlobalVariables.categories.obj.DeleteFromId(idCategorySelected.Value);
-                Utils.Files.SaveFile(Data.GlobalVariables.categories, Data.Constants.PathCategories);
-                Refresh_categories();
-            }
+            var idCategorySelected = GetCategorySelected();
+            if (idCategorySelected == null) return;
+            Data.GlobalVariables.categories ??= new Rif<Model.Cat.Categories>();
+            Data.GlobalVariables.categories.obj ??= new Model.Cat.Categories();
+            Data.GlobalVariables.categories.obj.DeleteFromId(idCategorySelected.Value);
+            Utils.Files.SaveFile(Data.GlobalVariables.categories, Data.Constants.PathCategories);
+            Refresh_categories();
         }
     }
 }
