@@ -31,7 +31,7 @@ namespace NumerazioneProtocollo.Forms
             }
         }
 
-        private void SaveDirFiles(string selectedPath)
+        private static void SaveDirFiles(string selectedPath)
         {
             Data.GlobalVariables.paths ??= new Model.Rif<Model.Path.SettingsVar>();
             Data.GlobalVariables.paths.Obj ??= new Model.Path.SettingsVar();

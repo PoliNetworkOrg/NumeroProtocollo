@@ -25,6 +25,7 @@ public partial class MainForm : Form
 
         GlobalVariables.docs ??= new Rif<Docs>();
         GlobalVariables.categories ??= new Rif<Categories>();
+        GlobalVariables.paths ??= new Rif<Model.Path.SettingsVar>();
 
         LoadFiles();
 
@@ -174,7 +175,6 @@ public partial class MainForm : Form
     private static void LoadFiles()
     {
         Files.LoadFile(GlobalVariables.paths, Constants.PathOfSettings);
-
         Files.LoadFile(GlobalVariables.docs, Data.Constants.GetPathDocuments());
         Files.LoadFile(GlobalVariables.categories, Data.Constants.GetPathCategories());
        
