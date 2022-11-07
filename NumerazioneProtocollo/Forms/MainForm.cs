@@ -301,14 +301,68 @@ namespace NumerazioneProtocollo
             }
         }
 
-        private void button_cat_modifica_Click(object sender, EventArgs e)
+        private void Button_cat_modifica_Click(object sender, EventArgs e)
         {
+            DialogResult dialogResult = MessageBox.Show(
+            "Vuoi veramente modificare il nome della categoria? E' un'operazione che non si dovrebbe fare con leggerezza.",
+            "Sei sicuro?",
+            MessageBoxButtons.YesNo
+        );
 
+            if (dialogResult == DialogResult.Yes)
+            {
+                Edit_cat_selected();
+            }
         }
 
-        private void button_cat_elimina_Click(object sender, EventArgs e)
-        {
 
+        private void Button_cat_elimina_Click(object sender, EventArgs e)
+        {
+            DialogResult dialogResult = MessageBox.Show(
+     "Vuoi veramente cancellare la categoria? E' un'operazione che non si dovrebbe fare con leggerezza.",
+     "Sei sicuro?",
+     MessageBoxButtons.YesNo
+ );
+
+            if (dialogResult == DialogResult.Yes)
+            {
+                Delete_cat_selected();
+            }
+         
+        }
+
+        private int? GetCategorySelected()
+        {
+            if (listBox_cat.SelectedIndex >= 0 && listBox_cat.SelectedIndex < listBox_cat.Items.Count)
+            {
+                var cat =(Model.Cat.Category) listBox_cat.Items[listBox_cat.SelectedIndex];
+                if (cat != null)
+                {
+                    return cat.Id;
+                }
+            }
+
+            return null;
+        }
+
+        private void Edit_cat_selected()
+        {
+            int? idCategorySelected = GetCategorySelected();
+            if (idCategorySelected != null)
+            {
+
+            }
+        }
+
+     
+
+        private void Delete_cat_selected()
+        {
+            int? idCategorySelected = GetCategorySelected();
+            if (idCategorySelected != null)
+            {
+
+            }
         }
     }
 }
