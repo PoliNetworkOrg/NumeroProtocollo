@@ -42,6 +42,9 @@
             this.button_doc_ricarica = new System.Windows.Forms.Button();
             this.button_doc_elimina = new System.Windows.Forms.Button();
             this.dataGridView_doc = new System.Windows.Forms.DataGridView();
+            this.label2 = new System.Windows.Forms.Label();
+            this.label3 = new System.Windows.Forms.Label();
+            this.textBox_search_id_doc = new System.Windows.Forms.TextBox();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDown_search_anno)).BeginInit();
             this.groupBox1.SuspendLayout();
             this.groupBox2.SuspendLayout();
@@ -51,15 +54,15 @@
             // 
             // textBox_search
             // 
-            this.textBox_search.Location = new System.Drawing.Point(16, 22);
+            this.textBox_search.Location = new System.Drawing.Point(98, 22);
             this.textBox_search.Name = "textBox_search";
-            this.textBox_search.Size = new System.Drawing.Size(302, 23);
+            this.textBox_search.Size = new System.Drawing.Size(220, 23);
             this.textBox_search.TabIndex = 0;
             this.textBox_search.TextChanged += new System.EventHandler(this.TextBox_search_TextChanged);
             // 
             // numericUpDown_search_anno
             // 
-            this.numericUpDown_search_anno.Location = new System.Drawing.Point(58, 71);
+            this.numericUpDown_search_anno.Location = new System.Drawing.Point(198, 94);
             this.numericUpDown_search_anno.Maximum = new decimal(new int[] {
             10000,
             0,
@@ -132,6 +135,9 @@
             // 
             // groupBox2
             // 
+            this.groupBox2.Controls.Add(this.label3);
+            this.groupBox2.Controls.Add(this.textBox_search_id_doc);
+            this.groupBox2.Controls.Add(this.label2);
             this.groupBox2.Controls.Add(this.label1);
             this.groupBox2.Controls.Add(this.textBox_search);
             this.groupBox2.Controls.Add(this.numericUpDown_search_anno);
@@ -145,7 +151,7 @@
             // label1
             // 
             this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(16, 73);
+            this.label1.Location = new System.Drawing.Point(156, 96);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(36, 15);
             this.label1.TabIndex = 2;
@@ -192,6 +198,32 @@
             this.dataGridView_doc.Size = new System.Drawing.Size(759, 366);
             this.dataGridView_doc.TabIndex = 0;
             // 
+            // label2
+            // 
+            this.label2.AutoSize = true;
+            this.label2.Location = new System.Drawing.Point(34, 25);
+            this.label2.Name = "label2";
+            this.label2.Size = new System.Drawing.Size(58, 15);
+            this.label2.TabIndex = 3;
+            this.label2.Text = "File name";
+            // 
+            // label3
+            // 
+            this.label3.AutoSize = true;
+            this.label3.Location = new System.Drawing.Point(10, 55);
+            this.label3.Name = "label3";
+            this.label3.Size = new System.Drawing.Size(82, 15);
+            this.label3.TabIndex = 5;
+            this.label3.Text = "Id documento";
+            // 
+            // textBox_search_id_doc
+            // 
+            this.textBox_search_id_doc.Location = new System.Drawing.Point(98, 51);
+            this.textBox_search_id_doc.Name = "textBox_search_id_doc";
+            this.textBox_search_id_doc.Size = new System.Drawing.Size(220, 23);
+            this.textBox_search_id_doc.TabIndex = 4;
+            this.textBox_search_id_doc.TextChanged += new System.EventHandler(this.textBox_search_id_doc_TextChanged);
+            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
@@ -230,5 +262,8 @@
         private Button button_doc_elimina;
         private DataGridView dataGridView_doc;
         private Button button_doc_ricarica;
+        private Label label3;
+        private TextBox textBox_search_id_doc;
+        private Label label2;
     }
 }

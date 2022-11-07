@@ -71,7 +71,7 @@ public partial class MainForm : Form
 
         doc.creationDate ??= DateTime.Now;
         doc.year ??= (int)numericUpDown_search_anno.Value;
-        doc.category ??= 0;
+        doc.category ??= GetCategorySelected() ?? 0;
         doc.id ??= GetNewId();
 
         GlobalVariables.docs.Obj.HandleEdit(doc);
@@ -335,5 +335,10 @@ public partial class MainForm : Form
         GlobalVariables.categories.Obj.DeleteFromId(idCategorySelected.Value);
         Files.SaveFile(GlobalVariables.categories, Constants.PathCategories);
         Refresh_categories();
+    }
+
+    private void textBox_search_id_doc_TextChanged(object sender, EventArgs e)
+    {
+        Refresh_docs();
     }
 }
