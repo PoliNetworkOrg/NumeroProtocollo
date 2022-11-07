@@ -218,9 +218,8 @@ namespace NumerazioneProtocollo.Model.Docs
             Data.GlobalVariables.docs ??= new Rif<Docs>();
             Data.GlobalVariables.docs.obj ??= new Docs();
             Data.GlobalVariables.docs.obj.documents ??= new List<Document>();
-
-            Document? doc = null;
-            doc = Model.Docs.Docs.Get(rowAdded, dataGridView_doc);
+            
+            Document? doc = Docs.Get(rowAdded, dataGridView_doc);
             if (doc != null)
                 return doc;
 

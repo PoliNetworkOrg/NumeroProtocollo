@@ -148,6 +148,13 @@ namespace NumerazioneProtocollo
 
         private void Changed_category(object? sender, EventArgs e)
         {
+            if (this.listBox_cat.SelectedIndex < 0 || this.listBox_cat.SelectedIndex >= this.listBox_cat.Items.Count)
+            {
+                this.categoryIdSelected = 0;
+                Refresh_docs();
+                return;
+            }
+
             var cat = (Model.Cat.Category)this.listBox_cat.Items[this.listBox_cat.SelectedIndex];
             if (cat.Id != null)
             {
@@ -331,6 +338,9 @@ namespace NumerazioneProtocollo
             if (dialogResult == DialogResult.Yes)
             {
                 Delete_cat_selected();
+                Changed_category(null, EventArgs.Empty);
+
+
             }
          
         }
