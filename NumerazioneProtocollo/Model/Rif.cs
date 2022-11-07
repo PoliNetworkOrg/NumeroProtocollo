@@ -1,16 +1,15 @@
 ﻿using Newtonsoft.Json;
 
-namespace NumerazioneProtocollo.Model
+namespace NumerazioneProtocollo.Model;
+
+[Serializable]
+[JsonObject(MemberSerialization.Fields)]
+internal class Rif<T>
 {
-    [Serializable]
-    [JsonObject(MemberSerialization.Fields)]
+    public T? Obj;
 
-    internal class Rif<T>
+    public Rif()
     {
-        public T? Obj;
-
-        public Rif() { 
-            Obj = default(T);
-        }
+        Obj = default;
     }
 }

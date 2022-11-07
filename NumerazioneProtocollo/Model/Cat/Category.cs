@@ -1,41 +1,25 @@
 ﻿using Newtonsoft.Json;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
-namespace NumerazioneProtocollo.Model.Cat
+namespace NumerazioneProtocollo.Model.Cat;
+
+[Serializable]
+[JsonObject(MemberSerialization.Fields)]
+internal class Category
 {
-    [Serializable]
-    [JsonObject(MemberSerialization.Fields)]
+    public DateTime? creationDate;
+    public string? Description;
+    public int? Id;
+    public string? Name;
 
-    internal class Category
+    public override string ToString()
     {
-        public int? Id;
-        public string? Name;
-        public string? Description; 
-        public DateTime? creationDate;
+        var s = "";
+        if (Id != null) s += Id + " | ";
 
-        public override string ToString()
-        {
-            string s = "";
-            if (this.Id != null)
-            {
-                s += this.Id + " | ";
-            }
+        if (!string.IsNullOrEmpty(Name)) s += Name + " | ";
 
-            if (!string.IsNullOrEmpty(this.Name))
-            {
-                s += this.Name + " | ";
-            }
+        if (!string.IsNullOrEmpty(Description)) s += Description;
 
-            if (!string.IsNullOrEmpty(this.Description))
-            {
-                s += this.Description;
-            }
-
-            return s;
-        }
+        return s;
     }
 }
